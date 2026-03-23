@@ -1,5 +1,5 @@
-import GuestHeader from "../components/layout/GuestHeader";
-import Footer from "../components/layout/Footer";
+import GuestHeader from "../../components/layout/GuestHeader";
+import Footer from "../../components/layout/Footer";
 
 const previewBooks = [
   {
@@ -21,7 +21,7 @@ const previewBooks = [
     gradient: "from-emerald-900 via-slate-900 to-amber-900",
   },
   {
-    title: "Café Notes",
+    title: "Cafï¿½ Notes",
     author: "Dara Vinca",
     tag: "Lifestyle",
     gradient: "from-rose-900 via-slate-900 to-orange-900",

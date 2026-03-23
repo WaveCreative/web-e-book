@@ -3,7 +3,7 @@
 
 @layer base {
   :root {
-    color-scheme: light;
+    color-scheme: dark;
     --brand: 15 23 42;
     --brand-accent: 52 211 153;
     --ink: 15 23 42;
