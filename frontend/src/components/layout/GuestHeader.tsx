@@ -23,13 +23,13 @@ function GuestHeader() {
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
-      ? "text-slate-900 transition-colors"
-      : "text-slate-600 hover:text-slate-900 hover:transition-colors transition-colors";
+      ? "text-white"
+      : "text-white/70 hover:text-white transition-colors";
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-white/80 backdrop-blur">
+    <header className="fixed top-0 z-30 w-full border-b border-white/10 bg-transparent backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-8xl items-center justify-between px-6">
-        <Link to="/" className="flex items-center gap-2 text-lg font-semibold">
+        <Link to="/" className="flex items-center gap-2 text-lg font-semibold text-white">
           <span className="tracking-tight">EBook.com</span>
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
@@ -53,7 +53,7 @@ function GuestHeader() {
             />
           </DropdownShell>
 
-          <a className="text-slate-600 hover:text-slate-900" href="#features">
+          <a className="text-white/70 hover:text-white transition-colors" href="#features">
             Flash Sale
           </a>
 
@@ -81,12 +81,12 @@ function GuestHeader() {
             <img
               src={SearchIcon}
               alt=""
-              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 opacity-60"
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 invert -translate-y-1/2 opacity-60"
             />
             <input
               type="text"
               placeholder={searchPlaceholder}
-              className="h-9 w-56 rounded-xl border border-slate-200 bg-white/70 pl-9 pr-4 text-xs text-slate-700 placeholder:text-slate-400 focus:border-slate-900 focus:outline-none"
+              className="h-9 w-56 rounded-xl border border-white/15 bg-white/10 pl-9 pr-4 text-xs text-white placeholder:text-white/50 focus:border-white/40 focus:outline-none"
             />
           </form>
         </nav>
@@ -95,25 +95,25 @@ function GuestHeader() {
             <button
               type="button"
               onClick={() => setMobileSearchOpen(true)}
-              className="rounded-full border border-slate-200 p-2"
+              className="rounded-full border border-white/15 p-2"
             >
               <img src={SearchIcon} alt="" className="h-4 w-4 opacity-70" />
             </button>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
-              className="rounded-full border border-slate-200 p-2"
+              className="rounded-full border border-white/15 p-2"
             >
               <img src={MenuIcon} alt="" className="h-4 w-4 opacity-70" />
             </button>
           </div>
           <Link
             to="/login"
-            className="rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:border-slate-900 hover:text-slate-900"
+            className="hidden rounded-xl bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-100 md:inline-flex"
           >
             Masuk
           </Link>
-          <button className="hidden rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 md:inline-flex">
+          <button className="rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold text-white hover:border-white/60">
             Daftar
           </button>
         </div>

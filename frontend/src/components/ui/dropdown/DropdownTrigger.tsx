@@ -29,14 +29,14 @@ function DropdownTrigger({
         onClick={onToggle}
         aria-expanded={open}
         className={`rounded-full p-1 transition ${
-          open ? "bg-slate-900" : "hover:bg-slate-100"
+          open ? "opacity-70" : "hover:opacity-70"
         }`}
       >
         <img
           src={chevronSrc}
           alt=""
-          className={`h-4 w-4 transition ${
-            open ? "brightness-0 invert scale-y-[-1]" : "opacity-70"
+          className={`h-4 w-4 transition invert ${
+            open ? "brightness-0 scale-y-[-1]" : "opacity-70"
           }`}
         />
       </button>
