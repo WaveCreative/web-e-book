@@ -1,12 +1,15 @@
 function Footer() {
   return (
-    <footer className="border-t border-slate-200/70 bg-white">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-10 text-sm text-slate-500 md:flex-row md:items-center md:justify-between">
-        <span>© 2026 E-Booka. Build your reading ritual.</span>
+    <footer className="fixed bottom-0 z-30 w-full border-b border-white/60 bg-transparent backdrop-blur">
+      <div className="mx-auto flex leading-normal max-w-7xl flex-col gap-3 px-6 py-6 text-white md:flex-row md:items-center md:justify-between">
+        <h2 className="tracking-[0.1em]">
+          Penawaran Terbatas! Gunakan Kode Promo untuk Potongan 
+          <span className="flex">Harga Hebat! Kode promo MR123.</span>
+        </h2>
         <div className="flex items-center gap-4">
-          <span>Privacy</span>
-          <span>Terms</span>
-          <span>Support</span>
+          <button className="rounded-lg bg-white p-3 w-40 text-md font-semibold text-black">
+            Ambil Promo
+          </button>
         </div>
       </div>
     </footer>

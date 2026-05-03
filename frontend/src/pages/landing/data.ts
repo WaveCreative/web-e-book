@@ -23,6 +23,30 @@ export const featuredBooks = [
     mood: "Lifestyle",
     gradient: "from-rose-900 via-slate-900 to-orange-900",
   },
+  {
+    title: "Designing Calm",
+    author: "Mira Halim",
+    mood: "Focus",
+    gradient: "from-slate-900 via-slate-800 to-emerald-900",
+  },
+  {
+    title: "Signal to Noise",
+    author: "Rafi Kurnia",
+    mood: "Deep work",
+    gradient: "from-indigo-900 via-slate-900 to-sky-900",
+  },
+  {
+    title: "Small Systems",
+    author: "Ava Luthfi",
+    mood: "Habits",
+    gradient: "from-emerald-900 via-slate-900 to-amber-900",
+  },
+  {
+    title: "Cafe Notes",
+    author: "Dara Vinca",
+    mood: "Lifestyle",
+    gradient: "from-rose-900 via-slate-900 to-orange-900",
+  },
 ];
 
 export const highlights = [

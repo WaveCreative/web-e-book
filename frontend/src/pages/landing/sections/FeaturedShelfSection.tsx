@@ -2,65 +2,53 @@ import { featuredBooks } from "../data";
 
 function FeaturedShelfSection() {
   return (
-    <section className="relative overflow-hidden bg-[#0f0f10] text-white">
-      <div className="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
-      <div className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
+    <section className="relative min-h-screen overflow-hidden bg-black text-white">
+      <div className="pointer-events-none absolute -left-24 -top-24 h-100 w-100 rounded-full bg-gradient-to-tl from-white/20 to-transparent" />
+      <div className="pointer-events-none absolute -right-24 -bottom-24 h-100 w-100 rounded-full bg-gradient-to-br from-white/20 to-transparent" />
 
-      <div className="mx-auto w-full max-w-6xl px-6 pb-20 pt-10">
+      <div className="mx-auto w-full max-w-6xl px-6 py-40">
         <div className="text-center">
-          <p className="text-xs uppercase tracking-[0.2em] text-white/60">
-            Flash Sale!
-          </p>
           <h2 className="mt-2 text-xl font-semibold">
-            E-Book Premium, Harga Terjangkau!
+            Flash Sale!
           </h2>
-          <p className="text-sm text-white/60">Jangan sampai ketinggalan!</p>
+          <p className="text-sm tracking-[0.2em] text-white">
+            E-Book Premium, Harga Terjangkau!
+          </p>
+          <p className="text-sm tracking-[0.2em] text-white">Jangan sampai ketinggalan!</p>
         </div>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
             <p className="text-xs font-semibold text-emerald-300">
-              Rekomendasi Special
+              Penawaran Spesial
             </p>
-            <h3 className="mt-2 text-2xl font-semibold">
+            <h2 className="mt-2 text-2xl font-semibold">
               Baca buku Jadi lebih
               <br />
               Mudah & Asyik
-            </h3>
-            <div className="mt-4 flex flex-wrap items-center gap-3">
-              <div className="flex items-center rounded-full border border-white/15 bg-white/5 px-3 py-2">
+            </h2>
+            <div className="mt-4 flex items-center gap-3">
+              <div className="flex items-center">
                 <input
-                  className="w-40 bg-transparent text-xs text-white placeholder:text-white/40 focus:outline-none"
+                  className="w-100 text-xs rounded-xl bg-white p-3 text-black placeholder:text-black/60"
                   placeholder="Cari buku..."
                 />
               </div>
-              <button className="rounded-full bg-emerald-500 px-4 py-2 text-xs font-semibold text-white">
+              <button className="rounded-xl w-30 bg-emerald-500 p-3 text-xs font-semibold text-white">
                 Search
               </button>
-              <button className="rounded-full bg-red-500 px-4 py-2 text-xs font-semibold text-white">
+              <button className="rounded-xl w-30 bg-red-500 p-3 text-xs font-semibold text-white">
                 Reset
               </button>
             </div>
           </div>
-
-          <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-white/70">
-            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-              <span>
-                Penawaran Terbatas! Gunakan Kode Promo untuk Potongan Harga Hebat!
-                Kode promo MR123.
-              </span>
-              <button className="rounded-full bg-white px-4 py-2 text-xs font-semibold text-slate-900">
-                Ambil Promo
-              </button>
-            </div>
           </div>
-        </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {featuredBooks.map((book) => (
             <article
               key={book.title}
-              className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg shadow-black/30"
+              className="rounded-2xl backdrop-blur-md border border-white/10 bg-white/5 p-4 shadow-lg shadow-black/30"
             >
               <div className={`h-36 rounded-xl bg-gradient-to-br ${book.gradient}`} />
               <div className="mt-3">
