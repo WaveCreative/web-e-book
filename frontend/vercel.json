@@ -1,0 +1,12 @@
+{
+  "experimentalServices": {
+    "web": {
+      "entrypoint": "apps/frontend",
+      "route": "/"
+    },
+    "api": {
+      "entrypoint": "apps/backend",
+      "route": "/api"
+    }
+  }
+}
