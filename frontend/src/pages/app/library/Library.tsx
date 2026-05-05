@@ -17,7 +17,7 @@ const libraryBooks = [
     gradient: "from-emerald-900 via-slate-900 to-amber-900",
   },
   {
-    title: "Café Notes",
+    title: "Cafï¿½ Notes",
     tag: "Lifestyle",
     gradient: "from-rose-900 via-slate-900 to-orange-900",
   },
