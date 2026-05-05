@@ -12,12 +12,12 @@ function MobileSearch({ open, onClose, placeholder }: MobileSearchProps) {
   return (
     <div className="fixed inset-0 z-50 bg-black/50 h-screen md:hidden" onClick={onClose}>
       <div
-        className="relative mx-auto mt-20 w-[90%] rounded-2xl bg-white p-4 shadow-xl transition duration-200 ease-out"
+        className="relative mx-auto mt-20 w-[90%] rounded-2xl bg-black border border-white/30 p-4 shadow-xl transition duration-200 ease-out"
         onClick={(event) => event.stopPropagation()}
       >
         <div className="flex items-center justify-between">
-          <span className="text-sm font-semibold text-slate-900">Search</span>
-          <button type="button" onClick={onClose} className="text-xs btn bg-black p-2 rounded-xl text-white">
+          <span className="text-sm font-semibold text-white">Search</span>
+          <button type="button" onClick={onClose} className="text-xs btn bg-transparent border border-white/30 p-2 rounded-xl text-white">
             Close
           </button>
         </div>
@@ -25,12 +25,12 @@ function MobileSearch({ open, onClose, placeholder }: MobileSearchProps) {
           <img
             src={SearchIcon}
             alt=""
-            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 opacity-60"
+            className="pointer-events-none absolute left-3 top-1/2 invert h-4 w-4 -translate-y-1/2 opacity-60"
           />
           <input
             type="text"
             placeholder={placeholder}
-            className="h-10 w-full rounded-full border border-slate-200 bg-white pl-9 pr-4 text-sm text-slate-700 placeholder:text-slate-400 focus:border-slate-900 focus:outline-none"
+            className="h-10 w-full rounded-full border border-white/30 bg-transparent pl-9 pr-4 text-sm text-white placeholder:text-slate-400 focus:border-white/30 focus:outline-none"
           />
         </div>
       </div>

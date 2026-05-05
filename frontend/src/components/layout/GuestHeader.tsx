@@ -24,14 +24,14 @@ function GuestHeader() {
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
       ? "text-white"
-      : "text-white/70 hover:text-white transition-colors";
+      : "text-white/70 hover:text-green-400 transition-colors";
 
   return (
-    <header className="fixed top-0 z-30 w-full border-b border-white/10 bg-transparent backdrop-blur">
+    <header className="fixed top-0 z-30 w-full border-b border-white/10 bg-gradient-to-t from-white/10 to-transparent backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-8xl items-center justify-between px-6">
-        <Link to="/" className="flex items-center gap-2 text-lg font-semibold text-white">
+        <a href="#hero" className="flex items-center gap-2 text-lg font-semibold text-white">
           <span className="tracking-tight">EBook.com</span>
-        </Link>
+        </a>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
           <DropdownShell
             shellRef={ebookDropdown.dropdownRef}
@@ -49,11 +49,11 @@ function GuestHeader() {
             <DropdownMenu
               open={ebookDropdown.open}
               items={desktopDropdowns.ebook}
-              footerText="Lihat semua koleksi"
+              footerText="Lihat semua"
             />
           </DropdownShell>
 
-          <a className="text-white/70 hover:text-white transition-colors" href="#features">
+          <a className="text-white/70 hover:text-green-400 transition-colors" href="#features">
             Flash Sale
           </a>
 
@@ -73,7 +73,7 @@ function GuestHeader() {
             <DropdownMenu
               open={audiobookDropdown.open}
               items={desktopDropdowns.audiobook}
-              footerText="Lihat semua koleksi"
+              footerText="Lihat semua"
             />
           </DropdownShell>
 
@@ -97,14 +97,14 @@ function GuestHeader() {
               onClick={() => setMobileSearchOpen(true)}
               className="rounded-full border border-white/15 p-2"
             >
-              <img src={SearchIcon} alt="" className="h-4 w-4 opacity-70" />
+              <img src={SearchIcon} alt="" className="h-4 w-4 invert opacity-70" />
             </button>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
               className="rounded-full border border-white/15 p-2"
             >
-              <img src={MenuIcon} alt="" className="h-4 w-4 opacity-70" />
+              <img src={MenuIcon} alt="" className="h-4 w-4 invert opacity-70" />
             </button>
           </div>
           <Link
@@ -113,9 +113,9 @@ function GuestHeader() {
           >
             Masuk
           </Link>
-          <button className="rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold text-white hover:border-white/60">
+          <Link to="/signup" className="rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold text-white hover:border-white/60">
             Daftar
-          </button>
+          </Link>
         </div>
       </div>
 
