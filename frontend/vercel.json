@@ -1,12 +1,9 @@
 {
   "experimentalServices": {
-    "web": {
-      "entrypoint": "apps/frontend",
-      "route": "/"
-    },
-    "api": {
-      "entrypoint": "apps/backend",
-      "route": "/api"
-    }
-  }
+    "web": { "entrypoint": "apps/frontend" },
+    "api": { "entrypoint": "apps/backend" }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api" }
+  ]
 }
