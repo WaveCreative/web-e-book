@@ -1,10 +1,15 @@
+interface DropdownMenuItem {
+  label: string;
+  to: string;
+}
+
 interface DropdownMenuProps {
   open: boolean;
-  items: string[];
+  items: DropdownMenuItem[];
   footerText: string;
 }
 
-function DropdownMenu({ open, items, footerText }: DropdownMenuProps) {
+function DropdownMenu({ open, items = [], footerText }: DropdownMenuProps) {
   return (
     <div
       className={`absolute left-0 top-full z-50 w-110 transition ${
@@ -18,13 +23,13 @@ function DropdownMenu({ open, items, footerText }: DropdownMenuProps) {
           <div className="grid grid-cols-[1fr_110px] gap-4">
             <div>
               <div className="grid grid-cols-3 gap-2 text-xs font-medium text-slate-600">
-                {items.map((item) => (
+                {items.filter(Boolean).map((item) => (
                   <button
-                    key={item}
+                    key={item.label}
                     className="rounded-lg border border-white/60 px-3 py-1 text-white hover:border-green-500 hover:bg-green-500 hover:text-black"
                     type="button"
                   >
-                    {item}
+                    {item?.label}
                   </button>
                 ))}
               </div>

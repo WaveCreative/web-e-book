@@ -1,10 +1,15 @@
 import { featuredBooks } from "../data";
+import Bookmark from "../../../assets/bookmark.svg";
+import BookmarkCheck from "../../../assets/bookmark-check.svg";
+import {useState} from "react";
+
 
 function FeaturedShelfSection() {
+  const [checkBookmark, setCheckBookmark] = useState(false);
   return (
-    <section id="featured" className="relative min-h-screen overflow-hidden bg-black text-white">
-      <div className="pointer-events-none absolute -left-24 -top-24 h-100 w-100 rounded-full bg-gradient-to-tl from-white/20 to-transparent" />
-      <div className="pointer-events-none absolute -right-24 -bottom-24 h-100 w-100 rounded-full bg-gradient-to-br from-white/20 to-transparent" />
+    <section id="flash-sale" className="relative min-h-screen overflow-hidden bg-black text-white">
+      <div className="pointer-events-none absolute -left-24 -top-24 h-100 w-100 rounded-full bg-linear-to-tl from-white/20 to-transparent" />
+      <div className="pointer-events-none absolute -right-24 -bottom-24 h-100 w-100 rounded-full bg-linear-to-br from-white/20 to-transparent" />
 
       <div className="mx-auto w-full max-w-6xl px-6 py-25">
         <div className="text-center">
@@ -34,10 +39,10 @@ function FeaturedShelfSection() {
                   placeholder="Cari buku..."
                 />
               </div>
-              <button className="rounded-xl w-20 bg-green-500 p-3 text-xs font-semibold text-white md:w-30">
+              <button className="rounded-xl w-20 bg-green-500 p-3 cursor cursor-pointer text-xs font-semibold text-white md:w-30">
                 Search
               </button>
-              <button className="rounded-xl w-20 bg-red-500 p-3 text-xs font-semibold text-white md:w-30">
+              <button className="rounded-xl w-20 bg-red-500 p-3 cursor cursor-pointer text-xs font-semibold text-white md:w-30">
                 Reset
               </button>
             </div>
@@ -51,7 +56,7 @@ function FeaturedShelfSection() {
               className="rounded-2xl backdrop-blur-md border border-white/10 bg-white/5 p-4 shadow-lg shadow-black/30"
             >
               <div
-                className={`h-36 rounded-xl bg-gradient-to-br ${book.gradient}`}
+                className={`h-36 rounded-xl bg-linear-to-br ${book.gradient}`}
               />
               <div className="mt-3 flex flex-col items-center space-y-3">
                 <h4 className="text-sm font-semibold">{book.title}</h4>
@@ -61,10 +66,14 @@ function FeaturedShelfSection() {
               </div>
               <div className="mt-3 flex flex-col items-center">
                 <div className="flex gap-2">
-                  <button className="rounded-full bg-blue-500 px-3 py-1 text-[10px] font-semibold">
+                  <button className="rounded-full bg-blue-500 px-4 py-2 text-[10px] cursor cursor-pointer font-semibold">
                     Lihat Detail
                   </button>
-                  <button className="rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-black">
+                  <button 
+                    className="rounded-full bg-white px-4 py-2 text-[10px] font-semibold cursor cursor-pointer text-black"
+                    onClick={() => setCheckBookmark(!checkBookmark)}
+                  >
+                    <img src={checkBookmark ? BookmarkCheck : Bookmark} alt="Bookmark" className="w-4 inline-flex items-center gap-3" />
                     Simpan
                   </button>
                 </div>

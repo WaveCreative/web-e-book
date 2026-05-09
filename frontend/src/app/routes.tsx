@@ -5,8 +5,8 @@ import Catalog from "../pages/catalog/Catalog";
 import NotFound from "../pages/404/NotFound";
 import Login from "../features/auth/pages/Login";
 import Signup from "../features/auth/pages/Signup";
-import Dashboard from "../pages/app/dashboard/Dashboard";
-import Library from "../pages/app/library/Library";
+import App from "../pages/app/Landing";
+import CartPage from "../pages/app/cart/CartPage";
 
 export const router = createBrowserRouter([
   {
@@ -16,8 +16,8 @@ export const router = createBrowserRouter([
       { path: "/catalog", element: <Catalog /> },
       { path: "/login", element: <Login /> },
       { path: "/signup", element: <Signup /> },
-      { path: "/dashboard", element: <Dashboard /> },
-      { path: "/library", element: <Library /> },
+      { path: "/landing", element: <App /> },
+      { path: "/cart", element: <CartPage /> },
       { path: "*", element: <NotFound /> },
     ],
   },

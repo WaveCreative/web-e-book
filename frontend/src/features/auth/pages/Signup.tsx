@@ -12,7 +12,7 @@ function Signup() {
         submitLabel="Daftar"
         googleLabel="Daftar dengan google"
         fields={[
-          { label: "Nama", type: "text", placeholder: "Nama", icon: MailIcon },
+          { label: "Nama", type: "text", placeholder: "Nama", icon: UserIcon },
           { label: "Email", type: "email", placeholder: "Email", icon: MailIcon },
           { label: "Kata sandi", type: "password", placeholder: "Kata sandi", icon: LockIcon },
         ]}

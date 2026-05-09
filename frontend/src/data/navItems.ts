@@ -1,6 +1,6 @@
 export const desktopDropdowns = {
   ebook: ["Romance", "Fantasy", "Horror", "Drama", "Edukasi", "Mystery"],
-  audiobook: ["Fiksi", "Nonfiksi", "Bisnis", "Self-help", "Horror", "Motivasi"],
+  audiobook: ["Romance", "Fantasy", "Horror", "Drama", "Edukasi", "Mystery"],
 };
 
 export const mobileMenuItems = [
@@ -12,9 +12,9 @@ export const mobileMenuItems = [
   {
     label: "Audiobook",
     to: "/catalog",
-    children: ["Fiksi", "Nonfiksi", "Bisnis", "Self-help", "Horror", "Motivasi"],
+    children: ["Romance", "Fantasy", "Horror", "Drama", "Edukasi", "Mystery"],
   },
-  { label: "Flash Sale", href: "#features" },
+  { label: "Flash Sale", href: "#flash-sale" },
   { label: "Masuk", to: "/login" },
 ];
 

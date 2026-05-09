@@ -1,7 +1,7 @@
 import GuestHeader from "../../components/layout/GuestHeader";
 import Footer from "../../components/layout/Footer";
-import FeaturedShelfSection from "./sections/FeaturedShelfSection";
 import HeroSection from "./sections/HeroSection";
+import FlashSale from "./sections/FlashSale";
 
 function Landing() {
   return (
@@ -9,7 +9,7 @@ function Landing() {
       <GuestHeader />
       <main>
         <HeroSection/>
-        <FeaturedShelfSection/>
+        <FlashSale/>
       </main>
       <Footer />
     </div>

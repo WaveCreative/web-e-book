@@ -1,34 +1,187 @@
-import { Link, NavLink } from "react-router-dom";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import Chevron from "../../assets/chevron-down.svg";
+import MenuIcon from "../../assets/menu.svg";
+import SearchIcon from "../../assets/search.svg";
+import CircleUser from "../../assets/circle-user.svg";
+import EllipsisVertical from "../../assets/ellipsis-vertical.svg";
+import ShoppingBag from "../../assets/shopping-bag.svg";
+import Bookmark from "../../assets/bookmark.svg";
+import DropdownMenu from "../ui/dropdown/DropdownMenu";
+import DropdownShell from "../ui/dropdown/DropdownShell";
+import DropdownTrigger from "../ui/dropdown/DropdownTrigger";
+import MobileMenu from "../ui/headerMobile/MobileMenu";
+import MobileSearch from "../ui/headerMobile/MobileSearch";
+import useDropdown from "../ui/dropdown/useDropdown";
+import {
+  desktopDropdowns,
+  mobileMenuItems,
+  searchPlaceholder,
+} from "../../data/navItemsOnline";
 
 function AppHeader() {
+  const ebookDropdown = useDropdown();
+  const audiobookDropdown = useDropdown();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
-      ? "text-slate-900"
-      : "text-slate-600 hover:text-slate-900";
+      ? "text-white"
+      : "text-white/70 hover:text-green-400 transition-colors";
 
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-white/80 backdrop-blur">
-      <div className="mx-auto flex h-16 w-full max-w-4xl items-center justify-between px-6">
-        <Link to="/dashboard" className="flex items-center gap-2 text-lg font-semibold">
+    <header className="fixed top-0 z-30 w-full border-b border-white/10 bg-linear-to-t from-white/10 to-transparent backdrop-blur">
+      <div className="mx-auto flex h-16 w-full max-w-8xl items-center justify-between px-6">
+        <a
+          href="#hero"
+          className="flex items-center gap-2 text-lg font-semibold text-white"
+        >
           <span className="tracking-tight">EBook.com</span>
-        </Link>
+        </a>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
-          <NavLink to="/dashboard" className={navLinkClass}>
-            Dashboard
-          </NavLink>
-          <NavLink to="/library" className={navLinkClass}>
-            Library
-          </NavLink>
+          <DropdownShell
+            shellRef={ebookDropdown.dropdownRef}
+            onMouseLeave={ebookDropdown.handleMouseLeave}
+          >
+            <DropdownTrigger
+              label="E-Book"
+              to="/catalog"
+              navLinkClass={navLinkClass}
+              onHoverOpen={ebookDropdown.handleHoverOpen}
+              onToggle={ebookDropdown.handleChevronClick}
+              open={ebookDropdown.open}
+              chevronSrc={Chevron}
+            />
+            <DropdownMenu
+              open={ebookDropdown.open}
+              items={ebookDropdownItems}
+              footerText="Lihat semua"
+            />
+          </DropdownShell>
+
+          <a
+            className="text-white/70 hover:text-green-400 transition-colors"
+            href="#flash-sale"
+          >
+            Flash Sale
+          </a>
+
+          <DropdownShell
+            shellRef={audiobookDropdown.dropdownRef}
+            onMouseLeave={audiobookDropdown.handleMouseLeave}
+          >
+            <DropdownTrigger
+              label="Audiobook"
+              to="/catalog"
+              navLinkClass={navLinkClass}
+              onHoverOpen={audiobookDropdown.handleHoverOpen}
+              onToggle={audiobookDropdown.handleChevronClick}
+              open={audiobookDropdown.open}
+              chevronSrc={Chevron}
+            />
+            <DropdownMenu
+              open={audiobookDropdown.open}
+              items={audiobookDropdownItems}
+              footerText="Lihat semua"
+            />
+          </DropdownShell>
+
+          <form className="relative">
+            <img
+              src={SearchIcon}
+              alt=""
+              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 invert -translate-y-1/2 opacity-60"
+            />
+            <input
+              type="text"
+              placeholder={searchPlaceholder}
+              className="h-9 w-56 rounded-xl border border-white/15 bg-white/10 pl-9 pr-4 text-xs text-white placeholder:text-white/50 focus:border-white/40 focus:outline-none"
+            />
+          </form>
         </nav>
-        <div className="flex items-center gap-3">
-          <button className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:border-slate-900 hover:text-slate-900">
-            Upgrade
-          </button>
-          <div className="h-9 w-9 rounded-full bg-slate-200" />
+        <div className="flex items-center gap-10">
+          <div className="flex items-center gap-2 md:hidden">
+            <button
+              type="button"
+              onClick={() => setMobileSearchOpen(true)}
+              className="rounded-full border border-white/15 p-2"
+            >
+              <img
+                src={SearchIcon}
+                alt=""
+                className="h-4 w-4 invert opacity-70"
+              />
+            </button>
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="rounded-full border border-white/15 p-2"
+            >
+              <img
+                src={MenuIcon}
+                alt=""
+                className="h-4 w-4 invert opacity-70"
+              />
+            </button>
+          </div>
+          <Link
+            to="/"
+            className="hidden md:inline-flex"
+          >
+            <img src={Bookmark} alt="" className="h-5 invert w-5" />
+          </Link>
+          <Link to="/cart" className="hidden md:inline-flex">
+            <img src={ShoppingBag} alt="Cart" className="h-5 invert w-5" />
+          </Link>
+          <Link
+            to="/"
+            className="hidden md:inline-flex"
+          >
+            <img src={CircleUser} alt="" className="h-5 invert w-5" />
+          </Link>
+          <Link
+            to="/"
+            className="hidden md:inline-flex"
+          >
+            <img src={EllipsisVertical} alt="" className="h-5 invert w-5" />
+          </Link>
         </div>
       </div>
+
+      <MobileSearch
+        open={mobileSearchOpen}
+        onClose={() => setMobileSearchOpen(false)}
+        placeholder={searchPlaceholder}
+      />
+      <MobileMenu
+        open={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+        items={transformedMobileMenuItems}
+      />
     </header>
   );
 }
 
 export default AppHeader;
+
+// Transform dropdown children to string[]
+const transformDropdownChildren = (
+  children: { label: string; to: string; }[] = []
+): string[] => children.map((child) => child.label);
+
+// Transform mobile menu items
+const transformMobileMenuItems = (items: typeof mobileMenuItems) =>
+  items.map((item) => ({
+    ...item,
+    children: item.children?.map((child) => child.label) || [],
+  }));
+
+// Apply transformations
+const ebookDropdownItems = transformDropdownChildren(
+  desktopDropdowns.find((d) => d.label === "E-Book")?.children
+);
+const audiobookDropdownItems = transformDropdownChildren(
+  desktopDropdowns.find((d) => d.label === "Audiobook")?.children
+);
+const transformedMobileMenuItems = transformMobileMenuItems(mobileMenuItems);
