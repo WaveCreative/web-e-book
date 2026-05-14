@@ -3,17 +3,25 @@ import { Link } from "react-router-dom";
 import Chevron from "../../../assets/chevron-down.svg";
 import MobileOverlay from "./MobileOverlay";
 
-interface MobileMenuItem {
+interface MobileSubMenuItems {
   label: string;
   to?: string;
   href?: string;
-  children?: string[];
+  children?: MobileSubMenuItems[];
 }
+
+interface MobileMenuItems {
+  label: string;
+  to?: string;
+  href?: string;
+  children?: MobileSubMenuItems[];
+}
+
 
 interface MobileMenuProps {
   open: boolean;
   onClose: () => void;
-  items: MobileMenuItem[];
+  items: MobileMenuItems[];
 }
 
 function MobileMenu({ open, onClose, items }: MobileMenuProps) {
@@ -56,11 +64,11 @@ function MobileMenu({ open, onClose, items }: MobileMenuProps) {
                     <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-white">
                       {item.children.map((child) => (
                         <Link
-                          key={child}
+                          key={child.label}
                           to={item.to ?? "/catalog"}
                           className="rounded-full border border-white/30 px-3 py-1 text-center"
                         >
-                          {child}
+                          {child.label}
                         </Link>
                       ))}
                     </div>

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Chevron from "../../assets/chevron-down.svg";
 import MenuIcon from "../../assets/menu.svg";
 import SearchIcon from "../../assets/search.svg";
@@ -7,12 +7,14 @@ import CircleUser from "../../assets/circle-user.svg";
 import EllipsisVertical from "../../assets/ellipsis-vertical.svg";
 import ShoppingBag from "../../assets/shopping-bag.svg";
 import Bookmark from "../../assets/bookmark.svg";
-import DropdownMenu from "../ui/dropdown/DropdownMenu";
-import DropdownShell from "../ui/dropdown/DropdownShell";
-import DropdownTrigger from "../ui/dropdown/DropdownTrigger";
-import MobileMenu from "../ui/headerMobile/MobileMenu";
-import MobileSearch from "../ui/headerMobile/MobileSearch";
-import useDropdown from "../ui/dropdown/useDropdown";
+import DropdownMenu from "../uionline/dropdown/DropdownMenu";
+import DropdownShell from "../uionline/dropdown/DropdownShell";
+import DropdownTrigger from "../uionline/dropdown/DropdownTrigger";
+import MobileMenu from "../uionline/headerMobile/MobileMenu";
+import MobileSearch from "../uionline/headerMobile/MobileSearch";
+import useDropdown from "../uionline/dropdown/useDropdown";
+import SearchInput from "../uionline/option/SearchInput";
+import { useSearch } from "../../app/providers";
 import {
   desktopDropdowns,
   mobileMenuItems,
@@ -22,20 +24,32 @@ import {
 function AppHeader() {
   const ebookDropdown = useDropdown();
   const audiobookDropdown = useDropdown();
+  const accountDropdown = useDropdown();
+  const settingDropdown = useDropdown();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const { pathname } = useLocation();
+  const { searchTerm, setSearchTerm } = useSearch();
+  const [specialPageSearch, setSpecialPageSearch] = useState("");
+  const isSpecialSearchPage = pathname === "/landing";
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
       ? "text-white"
       : "text-white/70 hover:text-green-400 transition-colors";
 
+  useEffect(() => {
+    if (isSpecialSearchPage) {
+      setSearchTerm("");
+    }
+  }, [isSpecialSearchPage, setSearchTerm]);
+
   return (
-    <header className="fixed top-0 z-30 w-full border-b border-white/10 bg-linear-to-t from-white/10 to-transparent backdrop-blur">
+    <header className="fixed top-0 z-30 w-full shadow-md shadow-white/20 backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-8xl items-center justify-between px-6">
         <a
           href="#hero"
-          className="flex items-center gap-2 text-lg font-semibold text-white"
+          className="flex items-center gap-2 text-2xl font-bold text-white"
         >
           <span className="tracking-tight">EBook.com</span>
         </a>
@@ -88,19 +102,18 @@ function AppHeader() {
           </DropdownShell>
 
           <form className="relative">
-            <img
-              src={SearchIcon}
-              alt=""
-              className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 invert -translate-y-1/2 opacity-60"
-            />
-            <input
-              type="text"
+            <SearchInput
+              value={isSpecialSearchPage ? specialPageSearch : searchTerm}
+              onChange={(value) =>
+                isSpecialSearchPage
+                  ? setSpecialPageSearch(value)
+                  : setSearchTerm(value)
+              }
               placeholder={searchPlaceholder}
-              className="h-9 w-56 rounded-xl border border-white/15 bg-white/10 pl-9 pr-4 text-xs text-white placeholder:text-white/50 focus:border-white/40 focus:outline-none"
             />
           </form>
         </nav>
-        <div className="flex items-center gap-10">
+        <div className="flex items-center gap-2">
           <div className="flex items-center gap-2 md:hidden">
             <button
               type="button"
@@ -125,27 +138,77 @@ function AppHeader() {
               />
             </button>
           </div>
-          <Link
-            to="/"
-            className="hidden md:inline-flex"
-          >
-            <img src={Bookmark} alt="" className="h-5 invert w-5" />
-          </Link>
-          <Link to="/cart" className="hidden md:inline-flex">
-            <img src={ShoppingBag} alt="Cart" className="h-5 invert w-5" />
-          </Link>
-          <Link
-            to="/"
-            className="hidden md:inline-flex"
-          >
-            <img src={CircleUser} alt="" className="h-5 invert w-5" />
-          </Link>
-          <Link
-            to="/"
-            className="hidden md:inline-flex"
-          >
-            <img src={EllipsisVertical} alt="" className="h-5 invert w-5" />
-          </Link>
+          <div className="hidden items-center gap-10 md:flex">
+            <Link to="/">
+              <img src={Bookmark} alt="" className="h-5 w-5 invert" />
+            </Link>
+            <Link to="/cart">
+              <img src={ShoppingBag} alt="Cart" className="h-5 w-5 invert" />
+            </Link>
+            <DropdownShell
+              shellRef={accountDropdown.dropdownRef}
+              onMouseLeave={accountDropdown.handleMouseLeave}
+            >
+              <button
+                type="button"
+                onMouseEnter={accountDropdown.handleHoverOpen}
+                onClick={accountDropdown.handleChevronClick}
+                className="inline-flex"
+              >
+                <img src={CircleUser} alt="User menu" className="h-5 w-5 invert" />
+              </button>
+
+              <div
+                className={`absolute right-0 top-full z-50 mt-3 min-w-[150px] rounded-l-md rounded-b-md bg-black/95 p-4 shadow-sm shadow-white transition ${
+                  accountDropdown.open
+                    ? "visible translate-y-0 opacity-100 pointer-events-auto"
+                    : "invisible translate-y-2 opacity-0 pointer-events-none"
+                }`}
+              >
+                <div className="flex flex-col gap-3 text-xs text-white">
+                  <Link to="/user" className="hover:text-green-400">
+                    Kimkong Official
+                  </Link>
+                  <Link to="/" className="hover:text-green-400">
+                    Dashboard
+                  </Link>
+                  <Link to="/logout" className="hover:text-green-400">
+                    Logout
+                  </Link>
+                </div>
+              </div>
+            </DropdownShell>
+            <DropdownShell
+              shellRef={settingDropdown.dropdownRef}
+              onMouseLeave={settingDropdown.handleMouseLeave}
+            >
+              <button
+                type="button"
+                onMouseEnter={settingDropdown.handleHoverOpen}
+                onClick={settingDropdown.handleChevronClick}
+                className="inline-flex"
+              >
+                <img src={EllipsisVertical} alt="Settings menu" className="h-5 w-5 invert" />
+              </button>
+
+              <div
+                className={`absolute right-0 top-full z-50 mt-3 min-w-[150px] rounded-l-md rounded-b-md bg-black/95 p-4 shadow-sm shadow-white transition ${
+                  settingDropdown.open
+                    ? "visible translate-y-0 opacity-100 pointer-events-auto"
+                    : "invisible translate-y-2 opacity-0 pointer-events-none"
+                }`}
+              >
+                <div className="flex flex-col gap-3 text-xs text-white">
+                  <Link to="/settings/account" className="hover:text-green-400">
+                    Setting
+                  </Link>
+                  <Link to="/settings/privacy" className="hover:text-green-400">
+                    Help Center
+                  </Link>
+                </div>
+              </div>
+            </DropdownShell>
+          </div>
         </div>
       </div>
 
@@ -153,11 +216,17 @@ function AppHeader() {
         open={mobileSearchOpen}
         onClose={() => setMobileSearchOpen(false)}
         placeholder={searchPlaceholder}
+        value={isSpecialSearchPage ? specialPageSearch : searchTerm}
+        onChange={(value) =>
+          isSpecialSearchPage
+            ? setSpecialPageSearch(value)
+            : setSearchTerm(value)
+        }
       />
       <MobileMenu
         open={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
-        items={transformedMobileMenuItems}
+        items={mobileMenuItems}
       />
     </header>
   );
@@ -165,17 +234,13 @@ function AppHeader() {
 
 export default AppHeader;
 
-// Transform dropdown children to string[]
+// Keep desktop dropdown items in object form for online dropdown menu.
 const transformDropdownChildren = (
   children: { label: string; to: string; }[] = []
-): string[] => children.map((child) => child.label);
-
-// Transform mobile menu items
-const transformMobileMenuItems = (items: typeof mobileMenuItems) =>
-  items.map((item) => ({
-    ...item,
-    children: item.children?.map((child) => child.label) || [],
-  }));
+): { label: string; to: string; }[] => children.map((child) => ({
+  label: child.label,
+  to: child.to,
+}));
 
 // Apply transformations
 const ebookDropdownItems = transformDropdownChildren(
@@ -184,4 +249,3 @@ const ebookDropdownItems = transformDropdownChildren(
 const audiobookDropdownItems = transformDropdownChildren(
   desktopDropdowns.find((d) => d.label === "Audiobook")?.children
 );
-const transformedMobileMenuItems = transformMobileMenuItems(mobileMenuItems);

@@ -7,6 +7,7 @@ interface MobileSubMenuItems {
   label: string;
   to?: string;
   href?: string;
+  children?: MobileSubMenuItems[];
 }
 
 interface MobileMenuItems {
@@ -14,6 +15,7 @@ interface MobileMenuItems {
   to?: string;
   href?: string;
   children?: MobileSubMenuItems[];
+  variant?: "default" | "plain";
 }
 interface MobileMenuProps {
   open: boolean;
@@ -30,7 +32,7 @@ function MobileMenu({ open, onClose, items }: MobileMenuProps) {
 
   return (
     <MobileOverlay open={open} onClose={onClose}>
-      <div className="ml-auto h-full w-72 bg-black border border-white/30 p-5 shadow-xl transition duration-200 ease-out flex flex-col">
+      <div className="ml-auto h-full w-60 bg-black border border-white/30 p-5 shadow-xl transition duration-200 ease-out flex flex-col">
         <div className="flex items-center justify-between">
           <span className="text-sm font-semibold text-white">Menu</span>
           <button
@@ -49,7 +51,7 @@ function MobileMenu({ open, onClose, items }: MobileMenuProps) {
               return (
                 <div key={item.label}>
                   <div className="flex items-center justify-between">
-                    <Link to={item.to ?? "#"} className="text-white">
+                    <Link to={item.to ?? "#"} className="text-white underline underline-offset-4 ">
                       {item.label}
                     </Link>
 
@@ -68,12 +70,12 @@ function MobileMenu({ open, onClose, items }: MobileMenuProps) {
                   </div>
 
                   {isOpen && (
-                    <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-white">
+                    <div className="mt-3 grid grid-cols-2 gap-2 text-white">
                       {item.children.filter(c => c && c.label).map((child) => (
                         <Link
                           key={child.label}
                           to={child.to ?? "#"}
-                          className="rounded-full border border-white/30 px-3 py-1 text-center"
+                          className="rounded-full text-[10px] border border-white/30 p-1 text-center"
                         >
                           {child.label}
                         </Link>
@@ -84,11 +86,35 @@ function MobileMenu({ open, onClose, items }: MobileMenuProps) {
               );
             }
 
+            if (item.href) {
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="block py-1 underline underline-offset-4"
+                >
+                  {item.label}
+                </a>
+              );
+            }
+
+            if (item.variant === "plain") {
+              return (
+                <Link
+                  key={item.label}
+                  to={item.to ?? "#"}
+                  className="block py-1 text-white underline underline-offset-4"
+                >
+                  {item.label}
+                </Link>
+              );
+            }
+
             return (
               <Link
                 key={item.label}
-                to={item.to ?? "#flash-sale"}
-                className="block border border-white/30 px-3 py-1 rounded-full w-20 text-center"
+                to={item.to ?? "#"}
+                className="text-xs border border-white/30 p-2 rounded-lg text-center"
               >
                 {item.label}
               </Link>

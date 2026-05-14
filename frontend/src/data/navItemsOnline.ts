@@ -1,4 +1,29 @@
-export const desktopDropdowns = [
+type DesktopDropdownChild = {
+  label: string;
+  to: string;
+};
+
+type DesktopDropdownItem = {
+  label: string;
+  to?: string;
+  children: DesktopDropdownChild[];
+};
+
+type MobileMenuChild = {
+  label: string;
+  to?: string;
+  href?: string;
+};
+
+type MobileMenuItem = {
+  label: string;
+  to?: string;
+  href?: string;
+  children?: MobileMenuChild[];
+  variant?: "default" | "plain";
+};
+
+export const desktopDropdowns: DesktopDropdownItem[] = [
   {
     label: "E-Book",
     to: "/book",
@@ -19,33 +44,11 @@ export const desktopDropdowns = [
       {label:"Horror", to:"/audio/horror",},
       {label:"Edukasi", to:"/audio/edukasi",},
       {label:"Mystery", to:"/audio/mystery",},
-    ],
-  },
-  {
-    label: "User",
-    children: [
-      {label:"Kimkong Official", to:"/user"},
-      {label:"Dashboard", to:"/",}, 
-      {label:"Logout", to:"/logout",},
-    ],
-  },
-  {
-    label: "Profile",
-    children: [
-      { label: "View Profile", to: "/profile/view" },
-      { label: "Edit Profile", to: "/profile/edit" },
-    ],
-  },
-  {
-    label: "Settings",
-    children: [
-      { label: "Account Settings", to: "/settings/account" },
-      { label: "Privacy Settings", to: "/settings/privacy" },
     ],
   },
 ];
 
-export const mobileMenuItems = [
+export const mobileMenuItems: MobileMenuItem[] = [
   {
     label: "E-Book",
     to: "/book",
@@ -57,6 +60,7 @@ export const mobileMenuItems = [
       {label:"Mystery", to:"/book/mystery",},
     ],
   },
+  { label: "Flash Sale", href: "#flash-sale" },
   {
     label: "Audiobook",
     to: "/audio",
@@ -69,18 +73,21 @@ export const mobileMenuItems = [
     ],
   },
   {
-    label: "User",
+    label: "Favorit",
+    to: "/bookmark",
+    variant: "plain"
+  },
+  {
+    label: "Keranjang", 
+    to: "/cart",
+    variant: "plain"
+  },
+  {
+    label: "Account",
     children: [
       {label:"Kimkong Official", to:"/user"},
       {label:"Dashboard", to:"/",}, 
       {label:"Logout", to:"/logout",},
-    ],
-  },
-  {
-    label: "Profile",
-    children: [
-      { label: "View Profile", to: "/profile/view" },
-      { label: "Edit Profile", to: "/profile/edit" },
     ],
   },
   {
@@ -90,7 +97,6 @@ export const mobileMenuItems = [
       { label: "Privacy Settings", to: "/settings/privacy" },
     ],
   },
-  { label: "Flash Sale", href: "#flash-sale", },
 ];
 
 export const searchPlaceholder = "Cari buku, genre, penulis...";

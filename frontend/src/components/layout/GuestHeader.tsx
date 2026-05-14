@@ -27,9 +27,9 @@ function GuestHeader() {
       : "text-white/70 hover:text-green-400 transition-colors";
 
   return (
-    <header className="fixed top-0 z-30 w-full border-b border-white/10 bg-gradient-to-t from-white/10 to-transparent backdrop-blur">
+    <header className="fixed top-0 z-30 w-full shadow-md shadow-white/20 backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-8xl items-center justify-between px-6">
-        <a href="#hero" className="flex items-center gap-2 text-lg font-semibold text-white">
+        <a href="#hero" className="flex items-center gap-2 text-2xl font-bold text-white">
           <span className="tracking-tight">EBook.com</span>
         </a>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
@@ -48,7 +48,7 @@ function GuestHeader() {
             />
             <DropdownMenu
               open={ebookDropdown.open}
-              items={desktopDropdowns.ebook}
+              items={ebookDropdownItems}
               footerText="Lihat semua"
             />
           </DropdownShell>
@@ -72,7 +72,7 @@ function GuestHeader() {
             />
             <DropdownMenu
               open={audiobookDropdown.open}
-              items={desktopDropdowns.audiobook}
+              items={audiobookDropdownItems}
               footerText="Lihat semua"
             />
           </DropdownShell>
@@ -134,3 +134,19 @@ function GuestHeader() {
 }
 
 export default GuestHeader;
+
+// Transform dropdown children to string[]
+const transformDropdownChildren = (
+  children: { label: string; to: string; }[] = []
+): { label: string; to: string; }[] => children.map((child) => ({
+  label: child.label,
+  to: child.to,
+}));
+
+// Apply transformations
+const ebookDropdownItems = transformDropdownChildren(
+  desktopDropdowns.find((d) => d.label === "E-Book")?.children
+);
+const audiobookDropdownItems = transformDropdownChildren(
+  desktopDropdowns.find((d) => d.label === "Audiobook")?.children
+);

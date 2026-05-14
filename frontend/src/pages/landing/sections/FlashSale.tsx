@@ -38,10 +38,10 @@ function FlashSale() {
                   placeholder="Cari buku..."
                 />
               </div>
-              <button className="rounded-xl w-20 bg-green-500 p-3 text-xs font-semibold text-white md:w-30">
+              <button className="rounded-xl w-20 bg-green-500 p-3 text-xs cursor cursor-pointer font-semibold text-white md:w-30">
                 Search
               </button>
-              <button className="rounded-xl w-20 bg-red-500 p-3 text-xs font-semibold text-white md:w-30">
+              <button className="rounded-xl w-20 bg-red-500 p-3 text-xs cursor cursor-pointer font-semibold text-white md:w-30">
                 Reset
               </button>
             </div>
@@ -67,10 +67,10 @@ function FlashSale() {
               </div>
               <div className="mt-3 flex flex-col items-center">
                 <div className="flex gap-2">
-                  <button className="rounded-full bg-blue-500 px-4 py-2 text-[10px] font-semibold">
+                  <button className="rounded-full bg-blue-500 px-4 py-2 text-xs cursor cursor-pointer font-semibold">
                     Lihat Detail
                   </button>
-                  <button className="rounded-full bg-white px-4 py-2 text-[10px] font-semibold text-black">
+                  <button className="rounded-full bg-white px-4 py-2 text-xs cursor cursor-pointer font-semibold text-black">
                     <img src={Bookmark} alt="Bookmark" className="w-4 inline-flex items-center gap-3" />
                     Simpan
                   </button>

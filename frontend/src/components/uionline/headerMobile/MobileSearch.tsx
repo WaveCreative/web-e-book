@@ -4,9 +4,17 @@ interface MobileSearchProps {
   open: boolean;
   onClose: () => void;
   placeholder: string;
+  value: string;
+  onChange: (value: string) => void;
 }
 
-function MobileSearch({ open, onClose, placeholder }: MobileSearchProps) {
+function MobileSearch({
+  open,
+  onClose,
+  placeholder,
+  value,
+  onChange,
+}: MobileSearchProps) {
   if (!open) return null;
 
   return (
@@ -29,6 +37,8 @@ function MobileSearch({ open, onClose, placeholder }: MobileSearchProps) {
           />
           <input
             type="text"
+            value={value}
+            onChange={(event) => onChange(event.target.value)}
             placeholder={placeholder}
             className="h-10 w-full rounded-full border border-white/30 bg-transparent pl-9 pr-4 text-sm text-white placeholder:text-slate-400 focus:border-white/30 focus:outline-none"
           />
