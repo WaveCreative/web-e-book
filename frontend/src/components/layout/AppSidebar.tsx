@@ -32,10 +32,10 @@ function AppSidebar() {
 
           {ordersOpen && (
             <div className="mt-3 flex flex-col gap-2 pl-4 text-base text-white/80">
-              <Link to="/orders" className="hover:text-green-400">
+              <Link to="/proses" className="hover:text-green-400">
                 Proses
               </Link>
-              <Link to="/orders" className="hover:text-green-400">
+              <Link to="/berhasil" className="hover:text-green-400">
                 Berhasil
               </Link>
             </div>

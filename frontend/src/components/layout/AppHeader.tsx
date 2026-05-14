@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Chevron from "../../assets/chevron-down.svg";
 import MenuIcon from "../../assets/menu.svg";
@@ -37,12 +37,6 @@ function AppHeader() {
     isActive
       ? "text-white"
       : "text-white/70 hover:text-green-400 transition-colors";
-
-  useEffect(() => {
-    if (isSpecialSearchPage) {
-      setSearchTerm("");
-    }
-  }, [isSpecialSearchPage, setSearchTerm]);
 
   return (
     <header className="fixed top-0 z-30 w-full shadow-md shadow-white/20 backdrop-blur">

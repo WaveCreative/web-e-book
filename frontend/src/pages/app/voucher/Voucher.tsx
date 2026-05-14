@@ -26,9 +26,9 @@ const vouchers = [
     tag: "Romance",
     subtitle: "Starter Bundle",
     minimum: "Min. Blj Rp50RB",
-    issued: "Issued 2026",
+    kode: "kode : MR123",
+    sdk : "S&K",
     bookTone: "text-black",
-    subTone: "text-black",
     imageTone: "bg-sky-300",
     accentTone: "bg-black text-white",
   },
@@ -38,9 +38,9 @@ const vouchers = [
     tag: "Horror",
     subtitle: "Curated Picks",
     minimum: "Min. Blj Rp40RB",
-    issued: "Issued 2026",
+    kode: "kode : MR123",
+    sdk : "S&K",
     bookTone: "text-yellow-300",
-    subTone: "text-yellow-300",
     imageTone: "bg-red-800",
     accentTone: "bg-yellow-300 text-white",
   },
@@ -50,10 +50,10 @@ const vouchers = [
     tag: "Edukasi",
     subtitle: "Unlimited collection pass",
     minimum: "Min. Blj Rp200RB",
-    issued: "Issued 2026",
+    kode: "kode : MR123",
+    sdk : "S&K",
     bookTone: "text-blue-600",
-    subTone: "text-blue-600",
-    imageTone: "bg-gray-400",
+    imageTone: "bg-gray-300",
     accentTone: "bg-blue-600 text-white",
   },
 ];
@@ -120,7 +120,7 @@ function VoucherPage() {
             {filteredVouchers.map((voucher) => (
               <article
                 key={voucher.code}
-                className="overflow-hidden rounded-2xl border border-white/10 bg-white/95 shadow-lg shadow-black/30"
+                className="overflow-hidden rounded-2xl border border-white/10 bg-white shadow-lg shadow-black/30"
               >
                 <div className="flex min-h-[136px]">
                   <div
@@ -131,11 +131,11 @@ function VoucherPage() {
                     </div>
                     <div>
                       <span
-                        className={`inline-flex rounded-full px-4 py-2 text-xs  ${voucher.accentTone}`}
+                        className={`inline-flex rounded-full px-8 py-3 text-xs  ${voucher.accentTone}`}
                       >
                         {voucher.tag}
                       </span>
-                      <p className={`mt-2 text-xs text-black font-semibold ${voucher.subTone}`}>
+                      <p className={`mt-2 text-xs text-black font-semibold ${voucher.bookTone}`}>
                         {voucher.subtitle}
                       </p>
                     </div>
@@ -144,15 +144,15 @@ function VoucherPage() {
                   <div className="flex flex-1 flex-col justify-between p-4 text-slate-900">
                     <div>
                       <h2 className="text-sm font-semibold">{voucher.title}</h2>
-                      <p className="mt-2 text-[11px] text-slate-500">
+                      <p className="mt-2 text-[11px] text-black font-semibold">
                         {voucher.minimum}
+                      </p>
+                      <p className="mt-2 text-[11px] text-black font-semibold">
+                        {voucher.kode} <span className="text-[10px] text-blue-500"><a href="#">{voucher.sdk}</a></span>
                       </p>
                     </div>
 
-                    <div className="flex items-center justify-between gap-3">
-                      <span className="text-[10px] text-slate-400">
-                        {voucher.issued}
-                      </span>
+                    <div className="flex items-center justify-end gap-3">
                       <button
                         type="button"
                         onClick={() => handleUseVoucher(voucher.title)}

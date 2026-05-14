@@ -7,6 +7,8 @@ import Signup from "../features/auth/pages/Signup";
 import App from "../pages/app/Landing";
 import CartPage from "../pages/app/cart/CartPage";
 import Voucher from "../pages/app/voucher/Voucher";
+import Berhasil from "../pages/app/pesanan/berhasil";
+import Proses from "../pages/app/pesanan/proses";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +20,8 @@ export const router = createBrowserRouter([
       { path: "/landing", element: <App /> },
       { path: "/cart", element: <CartPage /> },
       { path: "/voucher", element: <Voucher /> },
+      { path: "/proses", element: <Proses /> },
+      { path: "/berhasil", element: <Berhasil /> },
       { path: "*", element: <NotFound /> },
     ],
   },

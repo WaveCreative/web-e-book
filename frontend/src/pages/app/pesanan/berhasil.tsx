@@ -12,8 +12,8 @@ const sidebarMobileItems = [
     label: "Pesanan",
     to: "/orders",
     children: [
-      { label: "Proses", to: "/proses" },
-      { label: "Berhasil", to: "/berhasil" },
+      { label: "Proses", to: "/cart/proses" },
+      { label: "Berhasil", to: "/cart/berhasil" },
     ],
   },
 ];
@@ -27,9 +27,9 @@ function CartPage() {
     if (!keyword) return featuredBooks;
 
     return featuredBooks.filter((book) =>
-      [book.title, book.author, book.harga, book.diskon,book.mood || ""].some((value) =>
-        value.toLowerCase().includes(keyword)
-      )
+      [book.title, book.author, book.mood].some((value) =>
+        value.toLowerCase().includes(keyword),
+      ),
     );
   }, [searchTerm]);
 
@@ -52,19 +52,27 @@ function CartPage() {
                   className={`h-36 rounded-t-2xl bg-linear-to-br ${book.gradient}`}
                 />
                 <div className="mt-3 flex flex-col items-center space-y-3">
-                  <h4 className="text-sm text-white font-semibold">{book.title}</h4>
+                  <h4 className="text-sm text-white font-semibold">
+                    {book.title}
+                  </h4>
                   <p className="text-xs text-white/60">by {book.author}</p>
-                  <p className="text-xs text-white font-semibold">{book.diskon}</p>
+                  <p className="text-xs text-white font-semibold">
+                    {book.diskon}
+                  </p>
                   <p className="text-xs line-through text-white/60">
                     {book.harga}
                   </p>
                 </div>
                 <div className="mt-3 flex flex-col items-center">
-                  <div className="flex gap-2">
-                    <button className="rounded-full bg-blue-500 px-4 py-2 text-xs text-white cursor cursor-pointer font-semibold">
+                  <div className="flex items-center gap-2">
+                    <button className="rounded-full bg-blue-500 px-4 py-2 text-[10px] text-white cursor-pointer font-semibold">
                       Lihat Detail
                     </button>
-                  </div>
+
+                    <span className="flex items-center text-[10px] line-through text-white/60">
+                      {book.harga}
+                    </span>
+                  </div>                
                 </div>
               </article>
             ))}
