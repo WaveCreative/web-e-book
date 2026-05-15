@@ -97,9 +97,7 @@ function VoucherPage() {
     <div className="relative min-h-screen overflow-x-hidden bg-black">
       <div className="pointer-events-none absolute -left-24 -top-24 h-100 w-100 rounded-full bg-gradient-to-tl from-white/20 to-transparent" />
       <div className="pointer-events-none absolute -right-24 -bottom-24 h-100 w-100 rounded-full bg-gradient-to-br from-white/20 to-transparent" />
-      <AppHeader />
       <div className="py-16">
-        <AppSidebar />
         <main className="mx-auto w-full max-w-6xl px-4 pt-10 md:ml-[14rem] md:mr-8 md:w-auto md:px-0">
           <SidebarMobileNav items={sidebarMobileItems} />
 

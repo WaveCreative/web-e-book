@@ -6,7 +6,7 @@ function AppSidebar() {
   const [ordersOpen, setOrdersOpen] = useState(false);
 
   return (
-    <aside className="w-50 shadow-lg shadow-white/40 left-0 fixed z-30 text-white h-screen hidden md:block">
+    <aside className="w-50 mt-16 shadow-lg shadow-white/40 left-0 fixed z-30 text-white h-screen hidden md:block">
       <nav className="flex flex-col p-10 pl-10 text-lg">
         <Link to="/cart" className="mb-4 hover:text-green-400">
           Keranjang

@@ -1,4 +1,30 @@
-export const desktopDropdowns = [
+type DesktopDropdownChild = {
+  label: string;
+  to: string;
+};
+
+type DesktopDropdownItem = {
+  label: string;
+  to?: string;
+  children: DesktopDropdownChild[];
+};
+
+type MobileMenuChild = {
+  label: string;
+  to?: string;
+  href?: string;
+};
+
+type MobileMenuItem = {
+  label: string;
+  to?: string;
+  href?: string;
+  children?: MobileMenuChild[];
+  variant?: "default" | "plain";
+};
+
+
+export const desktopDropdowns: DesktopDropdownItem[]  = [
   {
     label: "E-Book",
     to: "/book",
@@ -23,7 +49,7 @@ export const desktopDropdowns = [
   },
 ];
 
-export const mobileMenuItems = [
+export const mobileMenuItems: MobileMenuItem[]  = [
   {
     label: "E-Book",
     to: "/book",
