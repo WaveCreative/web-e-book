@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 interface DropdownMenuItem {
   label: string;
   to: string;
@@ -24,17 +26,21 @@ function DropdownMenu({ open, items = [], footerText }: DropdownMenuProps) {
             <div>
               <div className="grid grid-cols-3 gap-2 text-xs font-medium text-slate-600">
                 {items.filter(Boolean).map((item) => (
-                  <button
+                  <Link
                     key={item.label}
-                    className="rounded-lg border border-white/60 px-3 py-1 text-white hover:border-green-500 hover:bg-green-500 hover:text-black"
-                    type="button"
+                    to={item.to}
+                    className="rounded-lg border text-center border-white/60 px-3 py-1 text-white hover:border-green-500 hover:bg-green-500 hover:text-black"
                   >
                     {item?.label}
-                  </button>
+                  </Link>
                 ))}
               </div>
 
-              <div className="mt-10 text-xs text-white">{footerText}</div>
+              <div className="mt-10 text-xs text-white">
+                <Link to={items[0]?.to || "/"} className="hover:text-green-400">
+                  {footerText}
+                </Link>
+              </div>
             </div>
 
             <div className="border-l border-white/70 pl-4 text-xs text-white">

@@ -33,7 +33,7 @@ function ComingSoon() {
         </p>
 
         <Link
-          to="/"
+          to="/landing"
           className="mt-8 inline-flex rounded-full bg-blue-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-blue-400"
         >
           Back to Home

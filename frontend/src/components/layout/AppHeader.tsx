@@ -41,12 +41,12 @@ function AppHeader() {
   return (
     <header className="fixed top-0 z-30 w-full shadow-md shadow-white/20 backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-8xl items-center justify-between px-6">
-        <a
-          href="#hero"
+        <Link
+          to="/landing"
           className="flex items-center gap-2 text-2xl font-bold text-white"
         >
           <span className="tracking-tight">EBook.com</span>
-        </a>
+        </Link>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
           <DropdownShell
             shellRef={ebookDropdown.dropdownRef}
@@ -133,7 +133,7 @@ function AppHeader() {
             </button>
           </div>
           <div className="hidden items-center gap-10 md:flex">
-            <Link to="/">
+            <Link to="/koleksi">
               <img src={Bookmark} alt="" className="h-5 w-5 invert" />
             </Link>
             <Link to="/cart">
@@ -163,7 +163,7 @@ function AppHeader() {
                   <Link to="/user" className="hover:text-green-400">
                     Kimkong Official
                   </Link>
-                  <Link to="/" className="hover:text-green-400">
+                  <Link to="/landing" className="hover:text-green-400">
                     Dashboard
                   </Link>
                   <Link to="/logout" className="hover:text-green-400">
