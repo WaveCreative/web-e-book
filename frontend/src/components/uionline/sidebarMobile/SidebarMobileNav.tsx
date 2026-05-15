@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Chevron from "../../../assets/chevron-down.svg";
 
@@ -16,11 +16,15 @@ function SidebarMobileNav({ items }: SidebarMobileNavProps) {
   const [openKey, setOpenKey] = useState<string | null>(null);
   const { pathname } = useLocation();
 
+  useEffect(() => {
+    setOpenKey(null);
+  }, [pathname]);
+
   return (
     <div className="mb-4 flex flex-wrap gap-2 overflow-visible md:hidden">
       {items.map((item) =>
         item.children?.length ? (
-          <div key={item.label} className="relative">
+          <div key={item.to} className="relative">
             <button
               type="button"
               onClick={() =>
@@ -46,7 +50,7 @@ function SidebarMobileNav({ items }: SidebarMobileNavProps) {
               <div className="absolute left-0 top-full z-20 mt-2 min-w-[140px] rounded-xl border border-white/15 bg-black/95 p-2 shadow-xl shadow-black/40">
                 {item.children.map((child) => (
                   <NavLink
-                    key={child.label}
+                    key={child.to}
                     to={child.to}
                     className={({ isActive }) =>
                       `block rounded-lg p-2 text-xs font-semibold my-1 transition-colors ${
@@ -76,7 +80,7 @@ function SidebarMobileNav({ items }: SidebarMobileNavProps) {
           >
             {item.label}
           </NavLink>
-        )
+        ),
       )}
     </div>
   );
