@@ -2,56 +2,126 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\GoogleAuthRequest;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(RegisterRequest $request): JsonResponse
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
+        $validated = $request->validated();
 
         $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
         ]);
 
-        return response()->json(['user' => $user], 201);
+        return response()->json([
+            'success' => true,
+            'message' => 'Register success',
+            'data' => [
+                'user' => $this->userPayload($user),
+            ],
+        ], 201);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request): JsonResponse
     {
-        $credentials = $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
+        $validated = $request->validated();
 
-        if (!Auth::attempt($credentials)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+        $user = User::where('email', $validated['email'])->first();
+
+        if (!$user || !Hash::check($validated['password'], $user->password)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid credentials',
+                'errors' => null,
+            ], 401);
         }
 
-        $user = Auth::user();
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json(['token' => $token, 'user' => $user]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Login success',
+            'data' => [
+                'token' => $token,
+                'user' => $this->userPayload($user),
+            ],
+        ]);
     }
 
-    public function logout()
+    public function google(GoogleAuthRequest $request): JsonResponse
     {
-        Auth::user()->tokens()->delete();
+        $validated = $request->validated();
 
-        return response()->json(['message' => 'Logged out successfully']);
+        $user = User::where('email', $validated['email'])->first();
+
+        if (!$user) {
+            $user = User::create([
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'avatar' => $validated['avatar'] ?? null,
+                'password' => Hash::make(Str::random(40)),
+                'email_verified_at' => now(),
+            ]);
+        } else {
+            $user->update([
+                'name' => $validated['name'],
+                'avatar' => $validated['avatar'] ?? $user->avatar,
+                'email_verified_at' => $user->email_verified_at ?? now(),
+            ]);
+        }
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Google login success',
+            'data' => [
+                'token' => $token,
+                'user' => $this->userPayload($user),
+            ],
+        ]);
     }
 
-    public function user()
+    public function logout(): JsonResponse
     {
-        return response()->json(['user' => Auth::user()]);
+        auth()->user()?->currentAccessToken()?->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Logout success',
+            'data' => null,
+        ]);
+    }
+
+    public function user(): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'message' => 'Current user fetched',
+            'data' => $this->userPayload(auth()->user()),
+        ]);
+    }
+
+    private function userPayload(?User $user): ?array
+    {
+        if (!$user) {
+            return null;
+        }
+
+        return [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'avatar' => $user->avatar,
+        ];
     }
 }
