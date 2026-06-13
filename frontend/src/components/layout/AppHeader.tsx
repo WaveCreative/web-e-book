@@ -14,7 +14,7 @@ import MobileMenu from "../uionline/headerMobile/MobileMenu";
 import MobileSearch from "../uionline/headerMobile/MobileSearch";
 import useDropdown from "../uionline/dropdown/useDropdown";
 import SearchInput from "../uionline/option/SearchInput";
-import { useSearch } from "../../app/providers";
+import { useAuth, useSearch } from "../../app/providers";
 import {
   desktopDropdowns,
   mobileMenuItems,
@@ -30,6 +30,7 @@ function AppHeader() {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const { pathname } = useLocation();
   const { searchTerm, setSearchTerm } = useSearch();
+  const { user, logout } = useAuth();
   const [specialPageSearch, setSpecialPageSearch] = useState("");
   const isSpecialSearchPage = pathname === "/landing";
 
@@ -160,15 +161,13 @@ function AppHeader() {
                 }`}
               >
                 <div className="flex flex-col gap-3 text-xs text-white">
-                  <Link to="/user" className="hover:text-green-400">
-                    Kimkong Official
-                  </Link>
+                  <span className="text-white/60">{user?.name ?? "User"}</span>
                   <Link to="/landing" className="hover:text-green-400">
                     Dashboard
                   </Link>
-                  <Link to="/logout" className="hover:text-green-400">
+                  <button type="button" onClick={() => logout()} className="text-left hover:text-green-400">
                     Logout
-                  </Link>
+                  </button>
                 </div>
               </div>
             </DropdownShell>
@@ -193,12 +192,8 @@ function AppHeader() {
                 }`}
               >
                 <div className="flex flex-col gap-3 text-xs text-white">
-                  <Link to="/settings/account" className="hover:text-green-400">
-                    Setting
-                  </Link>
-                  <Link to="/settings/privacy" className="hover:text-green-400">
-                    Help Center
-                  </Link>
+                  <span className="hover:text-green-400">Setting</span>
+                  <span className="hover:text-green-400">Help Center</span>
                 </div>
               </div>
             </DropdownShell>

@@ -1,10 +1,9 @@
 import { useMemo, useState } from "react";
 import { useSearch } from "../../../app/providers";
-import AppHeader from "../../../components/layout/AppHeader";
-import AppSidebar from "../../../components/layout/AppSidebar";
 import NotificationBanner from "../../../components/uionline/option/NotificationBanner";
 import SidebarMobileNav from "../../../components/uionline/sidebarMobile/SidebarMobileNav";
 import Buku from "../../../assets/buku";
+import { apiRequest, type ApiResponse } from "../../../lib/api";
 
 const sidebarMobileItems = [
   { label: "Keranjang", to: "/cart" },
@@ -13,8 +12,8 @@ const sidebarMobileItems = [
     label: "Pesanan",
     to: "/orders",
     children: [
-      { label: "Proses", to: "/cart/proses" },
-      { label: "Berhasil", to: "/cart/berhasil" },
+      { label: "Proses", to: "/proses" },
+      { label: "Berhasil", to: "/berhasil" },
     ],
   },
 ];
@@ -27,7 +26,7 @@ const vouchers = [
     subtitle: "Starter Bundle",
     minimum: "Min. Blj Rp50RB",
     kode: "kode : MR123",
-    sdk : "S&K",
+    sdk: "S&K",
     bookTone: "text-black",
     imageTone: "bg-sky-300",
     accentTone: "bg-black text-white",
@@ -39,7 +38,7 @@ const vouchers = [
     subtitle: "Curated Picks",
     minimum: "Min. Blj Rp40RB",
     kode: "kode : MR123",
-    sdk : "S&K",
+    sdk: "S&K",
     bookTone: "text-yellow-300",
     imageTone: "bg-red-800",
     accentTone: "bg-yellow-300 text-white",
@@ -51,7 +50,7 @@ const vouchers = [
     subtitle: "Unlimited collection pass",
     minimum: "Min. Blj Rp200RB",
     kode: "kode : MR123",
-    sdk : "S&K",
+    sdk: "S&K",
     bookTone: "text-blue-600",
     imageTone: "bg-gray-300",
     accentTone: "bg-blue-600 text-white",
@@ -84,13 +83,45 @@ function VoucherPage() {
     );
   }, [searchTerm]);
 
-  const handleUseVoucher = (voucherTitle: string) => {
+  const handleUseVoucher = async (voucherCode: string, voucherTitle: string) => {
     setNotification({
       open: true,
       tone: "success",
-      title: "Claim berhasil",
-      description: `${voucherTitle} siap dipakai. Nanti saat pakai backend, bagian ini tinggal diisi dari response API.`,
+      title: "Memproses voucher",
+      description: "Sedang dicek ke backend...",
     });
+
+    try {
+      const response = await apiRequest<
+        ApiResponse<{
+          code: string;
+          discount_percent: number;
+          discount_amount: number;
+          subtotal: number;
+          final_total: number;
+        }>
+      >("/vouchers/apply", {
+        method: "POST",
+        body: JSON.stringify({ code: voucherCode }),
+      });
+
+      setNotification({
+        open: true,
+        tone: "success",
+        title: "Claim berhasil",
+        description: `${voucherTitle} valid. Diskon Rp ${Number(
+          response.data.discount_amount
+        ).toLocaleString("id-ID")} siap dipakai.`,
+      });
+    } catch (err) {
+      setNotification({
+        open: true,
+        tone: "error",
+        title: "Voucher gagal dipakai",
+        description:
+          err instanceof Error ? err.message : "Voucher tidak bisa dipakai",
+      });
+    }
   };
 
   return (
@@ -122,18 +153,20 @@ function VoucherPage() {
               >
                 <div className="flex min-h-[136px]">
                   <div
-                    className={`flex w-40 flex-col justify-between gap-2 text-center p-4 ${voucher.imageTone}`}
+                    className={`flex w-40 flex-col justify-between gap-2 p-4 text-center ${voucher.imageTone}`}
                   >
-                    <div className={`flex items-center  justify-center ${voucher.bookTone}`}>
+                    <div className={`flex items-center justify-center ${voucher.bookTone}`}>
                       <Buku />
                     </div>
                     <div>
                       <span
-                        className={`inline-flex rounded-full px-8 py-3 text-xs  ${voucher.accentTone}`}
+                        className={`inline-flex rounded-full px-8 py-3 text-xs ${voucher.accentTone}`}
                       >
                         {voucher.tag}
                       </span>
-                      <p className={`mt-2 text-xs text-black font-semibold ${voucher.bookTone}`}>
+                      <p
+                        className={`mt-2 text-xs font-semibold text-black ${voucher.bookTone}`}
+                      >
                         {voucher.subtitle}
                       </p>
                     </div>
@@ -146,14 +179,17 @@ function VoucherPage() {
                         {voucher.minimum}
                       </p>
                       <p className="mt-2 text-[11px] text-black font-semibold">
-                        {voucher.kode} <span className="text-[10px] text-blue-500"><a href="#">{voucher.sdk}</a></span>
+                        {voucher.kode}{" "}
+                        <span className="text-[10px] text-blue-500">
+                          <a href="#">{voucher.sdk}</a>
+                        </span>
                       </p>
                     </div>
 
                     <div className="flex items-center justify-end gap-3">
                       <button
                         type="button"
-                        onClick={() => handleUseVoucher(voucher.title)}
+                        onClick={() => handleUseVoucher(voucher.code, voucher.title)}
                         className="rounded-full border border-blue-500 px-4 py-1 text-[10px] font-semibold text-blue-500 transition hover:bg-blue-500 hover:text-white"
                       >
                         Pakai

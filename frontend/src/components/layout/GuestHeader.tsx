@@ -113,7 +113,7 @@ function GuestHeader() {
           >
             Masuk
           </Link>
-          <Link to="/landing" className="rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold text-white hover:border-white/60">
+          <Link to="/signup" className="rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold text-white hover:border-white/60">
             Daftar
           </Link>
         </div>

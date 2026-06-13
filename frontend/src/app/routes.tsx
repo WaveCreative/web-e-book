@@ -1,4 +1,4 @@
-﻿import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import RootLayout from "../components/layout/RootLayout";
 import AppLayout from "../components/layout/AppLayout";
 
@@ -18,7 +18,6 @@ export const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
-      // guest
       {
         element: <GuestLayout />,
         children: [
@@ -27,19 +26,17 @@ export const router = createBrowserRouter([
           { path: "/signup", element: <Signup /> },
         ],
       },
-
-      // app
       {
         element: <AppLayout />,
         children: [
           { path: "/landing", element: <App /> },
           { path: "/cart", element: <CartPage /> },
           { path: "/voucher", element: <Voucher /> },
+          { path: "/orders", element: <Navigate to="/proses" replace /> },
           { path: "/proses", element: <Proses /> },
           { path: "/berhasil", element: <Berhasil /> },
         ],
       },
-
       { path: "*", element: <NotFound /> },
     ],
   },
