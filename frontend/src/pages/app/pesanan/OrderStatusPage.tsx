@@ -9,12 +9,18 @@ interface OrderSummary {
   discount_amount: number;
   final_price: number;
   status: string;
+  items_count: number;
+  primary_book: {
+    title: string;
+    author: string;
+    cover: string | null;
+    price: number;
+  } | null;
   created_at: string | null;
 }
 
 interface OrderStatusPageProps {
   status: "pending" | "paid";
-  heading: string;
   emptyText: string;
 }
 
@@ -31,7 +37,21 @@ const sidebarMobileItems = [
   },
 ];
 
-function OrderStatusPage({ status, heading, emptyText }: OrderStatusPageProps) {
+function resolveCover(cover: string | null) {
+  if (!cover) return null;
+  if (/^https?:\/\//i.test(cover)) return cover;
+
+  const apiUrl = import.meta.env.VITE_API_URL?.replace(/\/api$/, "").replace(/\/$/, "");
+  if (!apiUrl) return cover;
+
+  return `${apiUrl}/${cover.replace(/^\/+/, "")}`;
+}
+
+function formatPrice(value: number) {
+  return `Rp${value.toLocaleString("id-ID")}`;
+}
+
+function OrderStatusPage({ status, emptyText }: OrderStatusPageProps) {
   const { searchTerm } = useSearch();
   const [orders, setOrders] = useState<OrderSummary[]>([]);
   const [loading, setLoading] = useState(true);
@@ -75,28 +95,6 @@ function OrderStatusPage({ status, heading, emptyText }: OrderStatusPageProps) {
     );
   }, [orders, searchTerm]);
 
-  const handlePay = async (orderId: number) => {
-    try {
-      await apiRequest(`/orders/${orderId}/pay`, {
-        method: "PATCH",
-      });
-      await loadOrders();
-    } catch {
-      setError("Gagal mengubah status menjadi paid");
-    }
-  };
-
-  const handleCancel = async (orderId: number) => {
-    try {
-      await apiRequest(`/orders/${orderId}/cancel`, {
-        method: "PATCH",
-      });
-      await loadOrders();
-    } catch {
-      setError("Gagal membatalkan pesanan");
-    }
-  };
-
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-black">
       <div className="pointer-events-none absolute -left-24 -top-24 h-100 w-100 rounded-full bg-gradient-to-tl from-white/20 to-transparent" />
@@ -104,13 +102,6 @@ function OrderStatusPage({ status, heading, emptyText }: OrderStatusPageProps) {
       <div className="py-16">
         <main className="mx-auto w-full max-w-6xl px-4 pt-10 md:ml-[14rem] md:mr-8 md:w-auto md:px-0">
           <SidebarMobileNav items={sidebarMobileItems} />
-
-          <div className="mb-4">
-            <h1 className="text-2xl font-semibold text-white">{heading}</h1>
-            <p className="mt-1 text-sm text-white/60">
-              Pesanan yang tampil di halaman ini diambil dari backend.
-            </p>
-          </div>
 
           {error && (
             <div className="mb-4 rounded-2xl border border-red-500/20 bg-red-500/10 p-4 text-sm text-red-200">
@@ -123,64 +114,65 @@ function OrderStatusPage({ status, heading, emptyText }: OrderStatusPageProps) {
               Memuat pesanan...
             </div>
           ) : (
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {filteredOrders.map((order) => (
                 <article
                   key={order.id}
-                  className="overflow-hidden rounded-2xl border border-white/10 bg-white shadow-lg shadow-black/30"
+                  className="rounded-2xl backdrop-blur-md border border-white/10 bg-white/5 shadow-lg pb-6 shadow-black/30"
                 >
-                  <div className="flex min-h-[136px]">
-                    <div className="flex w-40 flex-col justify-between gap-2 bg-slate-900 p-4 text-center text-white">
-                      <div className="text-xs uppercase tracking-[0.25em] text-white/50">
-                        Order
-                      </div>
-                      <div className="text-3xl font-semibold">#{order.id}</div>
-                      <div className="text-[11px] text-white/60">
-                        {order.created_at ? new Date(order.created_at).toLocaleString("id-ID") : "-"}
-                      </div>
-                    </div>
+                  <div className="h-36 rounded-t-2xl bg-linear-to-br from-slate-900 via-slate-800 to-emerald-900" />
+                    {/* <div className="relative aspect-[4/3] overflow-hidden bg-slate-900">
+                      {order.primary_book?.cover ? (
+                        <img
+                          src={resolveCover(order.primary_book.cover) ?? undefined}
+                          alt={order.primary_book.title}
+                          className=" h-36 rounded-t-2xl object-cover"
+                        />
+                      ) : (
+                        <div className="bg-gradient-to-br from-cyan-200 via-orange-200 to-amber-300" />
+                      )}
+                    </div> */}
 
-                    <div className="flex flex-1 flex-col justify-between p-4 text-slate-900">
-                      <div>
-                        <h2 className="text-sm font-semibold">Status {order.status}</h2>
-                        <p className="mt-2 text-[11px] text-black font-semibold">
-                          Total: Rp {order.total_price.toLocaleString("id-ID")}
-                        </p>
-                        <p className="mt-1 text-[11px] text-black font-semibold">
-                          Diskon: Rp {order.discount_amount.toLocaleString("id-ID")}
-                        </p>
-                        <p className="mt-1 text-[11px] text-black font-semibold">
-                          Final: Rp {order.final_price.toLocaleString("id-ID")}
-                        </p>
-                      </div>
+                    <div className=" flex flex-col items-center pt-4 space-y-3">
+                      <h2 className="text-[18px] font-semibold leading-tight">
+                        {order.primary_book?.title ?? `Pesanan ${order.id}`}
+                      </h2>
+                      <p className=" text-[13px] text-white/75">
+                        {order.primary_book?.author ? `by ${order.primary_book.author}` : `${order.items_count} item`}
+                      </p>
 
-                      <div className="flex items-center justify-end gap-3">
-                        {status === "pending" && (
-                          <>
-                            <button
-                              type="button"
-                              onClick={() => handlePay(order.id)}
-                              className="rounded-full border border-green-500 px-4 py-1 text-[10px] font-semibold text-green-600 transition hover:bg-green-500 hover:text-white"
-                            >
-                              Bayar
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => handleCancel(order.id)}
-                              className="rounded-full border border-red-500 px-4 py-1 text-[10px] font-semibold text-red-500 transition hover:bg-red-500 hover:text-white"
-                            >
-                              Batalkan
-                            </button>
-                          </>
-                        )}
-                        {status === "paid" && (
-                          <span className="rounded-full border border-emerald-500 px-4 py-1 text-[10px] font-semibold text-emerald-500">
-                            Berhasil
+                      <p className=" text-[13px] text-white/80">
+                        <span
+                          className={
+                            status === "paid" ? "line-through text-white/55" : ""
+                          }
+                        >
+                          {formatPrice(order.total_price)}
+                        </span>
+                      </p>
+
+                      <p className=" text-[12px] font-medium text-white/85">
+                        {status === "pending" ? "diproses" : "berhasil"}
+                      </p>
+
+                      <div className=" flex items-center justify-between gap-3">
+                        <button
+                          type="button"
+                          className="rounded-xl bg-blue-700 px-4 py-2 text-[12px] font-semibold text-white transition hover:bg-[#1557d0]"
+                        >
+                          Lihat Detail
+                        </button>
+                        {status === "paid" ? (
+                          <span className="text-[12px] text-white/75 line-through">
+                            {formatPrice(order.final_price)}
+                          </span>
+                        ) : (
+                          <span className="text-[12px] text-white/75">
+                            {formatPrice(order.final_price)}
                           </span>
                         )}
                       </div>
                     </div>
-                  </div>
                 </article>
               ))}
             </div>

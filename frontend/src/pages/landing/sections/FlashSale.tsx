@@ -123,10 +123,10 @@ function FlashSale() {
             {filteredBooks.map((book) => (
               <article
                 key={book.id}
-                className="rounded-2xl backdrop-blur-md border border-white/10 bg-white/5 p-4 shadow-lg shadow-black/30"
+                className="rounded-2xl pb-4 backdrop-blur-md border border-white/10 bg-white/5 shadow-lg shadow-black/30"
               >
                 <div
-                  className={`h-36 rounded-xl bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900`}
+                  className={`h-36 rounded-t-xl bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900`}
                 />
                 <div className="mt-3 flex flex-col items-center space-y-3">
                   <h4 className="text-sm font-semibold">{book.title}</h4>
@@ -135,12 +135,12 @@ function FlashSale() {
                     Rp {book.price.toLocaleString("id-ID")}
                   </p>
                   <p className="text-xs line-through text-white/60">
-                    Stok: {book.stock}
+                    {book.stock}
                   </p>
                 </div>
                 <div className="mt-3 flex flex-col items-center">
                   <div className="flex gap-2">
-                    <button className="rounded-full bg-blue-500 px-4 py-2 text-xs cursor-pointer font-semibold">
+                    <button className="rounded-full bg-blue-700 px-4 py-2 text-xs cursor-pointer font-semibold">
                       Lihat Detail
                     </button>
                     <button className="rounded-full bg-white px-4 py-2 text-xs cursor-pointer font-semibold text-black">

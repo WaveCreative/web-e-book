@@ -321,12 +321,22 @@ class OrderController extends Controller
 
     private function orderSummary(Order $order): array
     {
+        $primaryItem = $order->items->first();
+        $primaryBook = $primaryItem?->book;
+
         return [
             'id' => $order->id,
             'total_price' => (float) $order->total_price,
             'discount_amount' => (float) $order->discount_amount,
             'final_price' => (float) $order->final_price,
             'status' => $order->status,
+            'items_count' => $order->items->count(),
+            'primary_book' => $primaryBook ? [
+                'title' => $primaryBook->title,
+                'author' => $primaryBook->author,
+                'cover' => $primaryBook->cover,
+                'price' => (float) $primaryItem->price,
+            ] : null,
             'created_at' => $order->created_at?->toISOString(),
         ];
     }

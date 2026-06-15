@@ -123,7 +123,7 @@ function CartPage() {
                       Rp {book.price.toLocaleString("id-ID")}
                     </p>
                     <p className="text-xs line-through text-white/60">
-                      Stok: {book.stock}
+                      {book.stock}
                     </p>
                   </div>
                   <div className="mt-3 flex flex-col items-center">
@@ -131,9 +131,9 @@ function CartPage() {
                       <button
                         type="button"
                         onClick={() => handleAddToCart(book.id)}
-                        className="rounded-full bg-blue-500 px-4 py-2 text-[10px] text-white cursor-pointer font-semibold"
+                        className="rounded-full bg-blue-700 px-4 py-2 text-[10px] text-white cursor-pointer font-semibold"
                       >
-                        Tambah ke Cart
+                        Pesan Sekarang
                       </button>
 
                       <span className="flex items-center text-[10px] font-semibold text-white">
