@@ -24,7 +24,7 @@ function Signup() {
         email: values.email ?? "",
         password: values.password ?? "",
       });
-      navigate("../../../pages/app/Landing.tsx");
+      navigate("../../../pages/app/dashbboard");
     } catch (err) {
       const message = err instanceof ApiError ? err.message : "Register failed";
       setError(message);

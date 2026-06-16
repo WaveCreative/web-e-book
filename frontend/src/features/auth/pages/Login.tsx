@@ -50,7 +50,7 @@ function Login() {
         email,
         avatar,
       });
-      navigate("../../../pages/app/Landing.tsx");
+      navigate("../../../pages/app/dashboard");
     } catch (err) {
       const message = err instanceof ApiError ? err.message : "Google login failed";
       setError(message);
