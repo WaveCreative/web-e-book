@@ -22,7 +22,7 @@ function Login() {
         email: values.email ?? "",
         password: values.password ?? "",
       });
-      navigate("../../../pages/app/Landing.tsx");
+      navigate("../../../pages/app/dashboard");
     } catch (err) {
       const message = err instanceof ApiError ? err.message : "Login failed";
       setError(message);
