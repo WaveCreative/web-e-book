@@ -24,7 +24,7 @@ function Signup() {
         email: values.email ?? "",
         password: values.password ?? "",
       });
-      navigate("../../../pages/app/dashboard/Landing.tsx");
+      navigate("/landing");
     } catch (err) {
       const message = err instanceof ApiError ? err.message : "Register failed";
       setError(message);
@@ -52,7 +52,7 @@ function Signup() {
         email,
         avatar,
       });
-      navigate("../../../pages/app/dashboard/Landing.tsx");
+      navigate("/landing");
     } catch (err) {
       const message = err instanceof ApiError ? err.message : "Google register failed";
       setError(message);
