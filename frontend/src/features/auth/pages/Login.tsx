@@ -22,7 +22,7 @@ function Login() {
         email: values.email ?? "",
         password: values.password ?? "",
       });
-      navigate("/cart");
+      navigate("../../../pages/app/Landing.tsx");
     } catch (err) {
       const message = err instanceof ApiError ? err.message : "Login failed";
       setError(message);
@@ -50,7 +50,7 @@ function Login() {
         email,
         avatar,
       });
-      navigate("/cart");
+      navigate("../../../pages/app/Landing.tsx");
     } catch (err) {
       const message = err instanceof ApiError ? err.message : "Google login failed";
       setError(message);
