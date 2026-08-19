@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Chevron from "../../assets/chevron-down.svg";
-import MenuIcon from "../../assets/menu.svg";
-import SearchIcon from "../../assets/search.svg";
-import CircleUser from "../../assets/circle-user.svg";
-import EllipsisVertical from "../../assets/ellipsis-vertical.svg";
-import ShoppingBag from "../../assets/shopping-bag.svg";
-import Bookmark from "../../assets/bookmark.svg";
+import { ChevronDown, MenuIcon, SearchIcon } from "lucide-react";
+import Star from "../../assets/star";
 import DropdownMenu from "../uionline/dropdown/DropdownMenu";
 import DropdownShell from "../uionline/dropdown/DropdownShell";
 import DropdownTrigger from "../uionline/dropdown/DropdownTrigger";
@@ -24,13 +19,11 @@ import {
 function AppHeader() {
   const ebookDropdown = useDropdown();
   const audiobookDropdown = useDropdown();
-  const accountDropdown = useDropdown();
-  const settingDropdown = useDropdown();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const { pathname } = useLocation();
   const { searchTerm, setSearchTerm } = useSearch();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const [specialPageSearch, setSpecialPageSearch] = useState("");
   const isSpecialSearchPage = pathname === "/landing";
 
@@ -60,7 +53,7 @@ function AppHeader() {
               onHoverOpen={ebookDropdown.handleHoverOpen}
               onToggle={ebookDropdown.handleChevronClick}
               open={ebookDropdown.open}
-              chevronSrc={Chevron}
+              chevronSrc={<ChevronDown size={16} />}
             />
             <DropdownMenu
               open={ebookDropdown.open}
@@ -87,7 +80,7 @@ function AppHeader() {
               onHoverOpen={audiobookDropdown.handleHoverOpen}
               onToggle={audiobookDropdown.handleChevronClick}
               open={audiobookDropdown.open}
-              chevronSrc={Chevron}
+              chevronSrc={<ChevronDown size={16} />}
             />
             <DropdownMenu
               open={audiobookDropdown.open}
@@ -115,88 +108,35 @@ function AppHeader() {
               onClick={() => setMobileSearchOpen(true)}
               className="rounded-full border border-white/15 p-2"
             >
-              <img
-                src={SearchIcon}
-                alt=""
-                className="h-4 w-4 invert opacity-70"
-              />
+              <SearchIcon className="h-4 w-4 opacity-70" />
             </button>
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
               className="rounded-full border border-white/15 p-2"
             >
-              <img
-                src={MenuIcon}
-                alt=""
-                className="h-4 w-4 invert opacity-70"
-              />
+              <MenuIcon className="h-4 w-4 opacity-70" />
             </button>
           </div>
-          <div className="hidden items-center gap-10 md:flex">
-            <Link to="/koleksi">
-              <img src={Bookmark} alt="" className="h-5 w-5 invert" />
-            </Link>
-            <Link to="/cart">
-              <img src={ShoppingBag} alt="Cart" className="h-5 w-5 invert" />
-            </Link>
-            <DropdownShell
-              shellRef={accountDropdown.dropdownRef}
-              onMouseLeave={accountDropdown.handleMouseLeave}
+          <div className="hidden items-center gap-10 mr-2 md:flex">
+            <Link
+              to="/landing#subscription"
+              className="flex items-center gap-2 border border-(--accent1) rounded-xl p-3 text-xs text-(--accent1) hover:text-(--accent1)/70"
             >
-              <button
-                type="button"
-                onMouseEnter={accountDropdown.handleHoverOpen}
-                onClick={accountDropdown.handleChevronClick}
-                className="inline-flex"
-              >
-                <img src={CircleUser} alt="User menu" className="h-5 w-5 invert" />
-              </button>
-
-              <div
-                className={`absolute right-0 top-full z-50 mt-3 min-w-[150px] rounded-l-md rounded-b-md bg-black/95 p-4 shadow-sm shadow-white transition ${
-                  accountDropdown.open
-                    ? "visible translate-y-0 opacity-100 pointer-events-auto"
-                    : "invisible translate-y-2 opacity-0 pointer-events-none"
-                }`}
-              >
-                <div className="flex flex-col gap-3 text-xs text-white">
-                  <span className="text-white/60">{user?.name ?? "User"}</span>
-                  <Link to="/landing" className="hover:text-green-400">
-                    Dashboard
-                  </Link>
-                  <button type="button" onClick={() => logout()} className="text-left hover:text-green-400">
-                    Logout
-                  </button>
-                </div>
-              </div>
-            </DropdownShell>
-            <DropdownShell
-              shellRef={settingDropdown.dropdownRef}
-              onMouseLeave={settingDropdown.handleMouseLeave}
-            >
-              <button
-                type="button"
-                onMouseEnter={settingDropdown.handleHoverOpen}
-                onClick={settingDropdown.handleChevronClick}
-                className="inline-flex"
-              >
-                <img src={EllipsisVertical} alt="Settings menu" className="h-5 w-5 invert" />
-              </button>
-
-              <div
-                className={`absolute right-0 top-full z-50 mt-3 min-w-[150px] rounded-l-md rounded-b-md bg-black/95 p-4 shadow-sm shadow-white transition ${
-                  settingDropdown.open
-                    ? "visible translate-y-0 opacity-100 pointer-events-auto"
-                    : "invisible translate-y-2 opacity-0 pointer-events-none"
-                }`}
-              >
-                <div className="flex flex-col gap-3 text-xs text-white">
-                  <span className="hover:text-green-400">Setting</span>
-                  <span className="hover:text-green-400">Help Center</span>
-                </div>
-              </div>
-            </DropdownShell>
+              <Star />
+              <span>Upgrade to Premium</span>
+            </Link>
+            <Link to="/profile" className="flex items-center gap-2 text-sm">
+              <img
+                src={
+                  user?.avatar ??
+                  "https://res.cloudinary.com/dgffa1m7j/image/upload/v1782797688/img_3d_at7pmj.svg"
+                }
+                alt={user?.name ?? "User"}
+                className="h-10 w-10 border border-(--highemphasis)/5 rounded-full object-cover"
+              />
+              <span className="text-(--primary)">{user?.name ?? "User"}</span>
+            </Link>
           </div>
         </div>
       </div>
@@ -225,16 +165,17 @@ export default AppHeader;
 
 // Keep desktop dropdown items in object form for online dropdown menu.
 const transformDropdownChildren = (
-  children: { label: string; to: string; }[] = []
-): { label: string; to: string; }[] => children.map((child) => ({
-  label: child.label,
-  to: child.to,
-}));
+  children: { label: string; to: string }[] = [],
+): { label: string; to: string }[] =>
+  children.map((child) => ({
+    label: child.label,
+    to: child.to,
+  }));
 
 // Apply transformations
 const ebookDropdownItems = transformDropdownChildren(
-  desktopDropdowns.find((d) => d.label === "E-Book")?.children
+  desktopDropdowns.find((d) => d.label === "E-Book")?.children,
 );
 const audiobookDropdownItems = transformDropdownChildren(
-  desktopDropdowns.find((d) => d.label === "Audiobook")?.children
+  desktopDropdowns.find((d) => d.label === "Audiobook")?.children,
 );

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Chevron from "../../../assets/chevron-down.svg";
+import {ChevronDown} from "lucide-react";
 import MobileOverlay from "./MobileOverlay";
 
 interface MobileSubMenuItems {
@@ -59,10 +59,8 @@ function MobileMenu({ open, onClose, items }: MobileMenuProps) {
                       type="button"
                       onClick={() => toggleSection(item.label)}
                     >
-                      <img
-                        src={Chevron}
-                        alt=""
-                        className={`h-4 w-4 invert transition ${
+                      <ChevronDown
+                        className={`h-4 w-4 transition ${
                           isOpen ? "rotate-180" : "opacity-70"
                         }`}
                       />

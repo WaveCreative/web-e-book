@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import Chevron from "../../../assets/chevron-down.svg";
+import {ChevronDown} from "lucide-react";
 
 interface SidebarMobileNavItem {
   label: string;
@@ -37,17 +37,15 @@ function SidebarMobileNav({ items }: SidebarMobileNavProps) {
               }`}
             >
               <span>{item.label}</span>
-              <img
-                src={Chevron}
-                alt=""
-                className={`h-3 w-3 invert transition-transform ${
+              <ChevronDown
+                className={`h-3 w-3 transition-transform ${
                   openKey === item.label ? "rotate-180" : ""
                 }`}
               />
             </button>
 
             {openKey === item.label && (
-              <div className="absolute left-0 top-full z-20 mt-2 min-w-[140px] rounded-xl border border-white/15 bg-black/95 p-2 shadow-xl shadow-black/40">
+              <div className="absolute left-0 top-full z-20 mt-2 min-w-35 rounded-xl border border-white/15 bg-black/95 p-2 shadow-xl shadow-black/40">
                 {item.children.map((child) => (
                   <NavLink
                     key={child.to}

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Wrench from "../../assets/wrench.svg";
+import {Wrench} from "lucide-react";
 
 function ComingSoon() {
   return (
@@ -12,10 +12,8 @@ function ComingSoon() {
         
         {/* Icon */}
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-blue-500/10">
-          <img
-            src={Wrench}
-            alt="Coming Soon"
-            className="h-7 w-7 invert"
+          <Wrench
+            size={32}
           />
         </div>
 

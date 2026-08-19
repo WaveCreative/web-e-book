@@ -1,60 +1,39 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthFormCard from "../components/AuthFormCard";
 import AuthShell from "../components/AuthShell";
-import MailIcon from "../../../assets/mail.svg";
-import LockIcon from "../../../assets/lock.svg";
-import UserIcon from "../../../assets/user.svg";
+import AuthFormCard from "../components/AuthFormCard";
 import { useAuth } from "../../../app/providers";
 import { ApiError } from "../../../lib/api";
 
 function Signup() {
   const navigate = useNavigate();
-  const { register, googleLogin } = useAuth();
-  const [error, setError] = useState<string | null>(null);
+
+  const { register } = useAuth();
+
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (values: Record<string, string>) => {
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (
+    values: Record<string, string>,
+  ) => {
     setLoading(true);
     setError(null);
 
     try {
       await register({
-        name: values.name ?? "",
-        email: values.email ?? "",
-        password: values.password ?? "",
+        name: values.name,
+        email: values.email,
+        password: values.password,
       });
+
       navigate("/landing");
     } catch (err) {
-      const message = err instanceof ApiError ? err.message : "Register failed";
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
-  };
+      const message =
+        err instanceof ApiError
+          ? err.message
+          : "Register gagal";
 
-  const handleGoogleLogin = async () => {
-    const email = window.prompt("Masukkan email Google untuk mock register");
-    if (!email) return;
-
-    const name = window.prompt("Masukkan nama Google", email.split("@")[0]);
-    if (!name) return;
-
-    const avatar = window.prompt("Masukkan avatar URL (opsional)") || null;
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      await googleLogin({
-        google_token: "mock-google-token",
-        name,
-        email,
-        avatar,
-      });
-      navigate("/landing");
-    } catch (err) {
-      const message = err instanceof ApiError ? err.message : "Google register failed";
       setError(message);
     } finally {
       setLoading(false);
@@ -64,42 +43,35 @@ function Signup() {
   return (
     <AuthShell>
       <AuthFormCard
-        title="Daftar"
-        submitLabel="Daftar"
-        googleLabel="Daftar dengan Google"
+        title="Create Account 🚀"
+        description="Buat akun Ebook.com dan nikmati ribuan koleksi ebook yang siap menemani aktivitas membaca kamu."
+        submitLabel="Sign Up"
+        loading={loading}
+        error={error}
+        alternateLabel="Sudah punya akun?"
+        alternateText="Sign In"
+        alternateHref="/login"
+        onSubmit={handleSubmit}
         fields={[
           {
-            label: "Nama",
             name: "name",
             type: "text",
-            placeholder: "Nama",
-            icon: UserIcon,
+            placeholder: "Full Name",
             autoComplete: "name",
           },
           {
-            label: "Email",
             name: "email",
             type: "email",
             placeholder: "Email",
-            icon: MailIcon,
             autoComplete: "email",
           },
           {
-            label: "Kata sandi",
             name: "password",
             type: "password",
-            placeholder: "Kata sandi",
-            icon: LockIcon,
+            placeholder: "Password",
             autoComplete: "new-password",
           },
         ]}
-        alternateLabel="Sudah punya akun?"
-        alternateHref="/login"
-        alternateText="Masuk"
-        onSubmit={handleSubmit}
-        onGoogleClick={handleGoogleLogin}
-        error={error}
-        loading={loading}
       />
     </AuthShell>
   );

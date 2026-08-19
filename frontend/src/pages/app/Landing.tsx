@@ -1,15 +1,22 @@
-import AppFooter from "../../components/layout/AppFooter";
-import FeaturedShelfSection from "./dashboard/FlashSale";
-import HeroSection from "./dashboard/HeroSection";
-
+import Recommended from "./dashboard/Recommended";
+import Kategori from "./dashboard/Kategori";
+import WhyChooseUs from "./dashboard/WhyChooseUs";
+import Subscription from "./dashboard/Subscription";
+import Testimonials from "./dashboard/Testimonials";
+import FAQ from "./dashboard/FAQ";
+import Footer from "../../components/layout/Footer";
 function Landing() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50 dark:bg-[#0f0f10]">
+    <div className="min-h-screen bg-(--background) dark:bg-[#0f0f10]">
       <main>
-        <HeroSection/>
-        <FeaturedShelfSection/>
+        <Recommended/>
+        <Kategori/>
+        <WhyChooseUs/>
+        <Subscription/>
+        <Testimonials/>
+        <FAQ/>
       </main>
-      <AppFooter />
+      <Footer />
     </div>
   );
 }

@@ -1,14 +1,24 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 @import "tailwindcss";
 
 @layer base {
   :root {
     color-scheme: light dark;
-    --brand: 15 23 42;
-    --brand-accent: 52 211 153;
-    --ink: 15 23 42;
-    --muted: 100 116 139;
-    --surface: 248 250 252;
+    --primary: #00FF7F;
+    --secondary: #005C9E;
+    --accent1: #FFC107;
+    --accent2: #CF0B0C;
+    --background: #000000;
+    --surface: #212121;
+    --styled: #005C9E;
+    --highemphasis: #FFFFFF;
+    --mediumemphasis: #9E9E9E;
+    --disable: #757575;
+    --border: #E0E0E0;
+    --placeholder: #424242;
+    --success: #00FF7F;
+    --warning: #F57C00;
+    --error: #FF0000;
   }
 
   * {
@@ -21,7 +31,7 @@
 
   body {
     @apply bg-white text-slate-900 antialiased;
-    font-family: "Poppins", "Segoe UI", sans-serif;
+    font-family: "Poppins", sans-serif;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -36,7 +46,7 @@
   h4,
   h5,
   h6 {
-    font-family: "Poppins", "Segoe UI", sans-serif;
+    font-family: "Poppins", sans-serif;
   }
 
   p,
@@ -46,6 +56,42 @@
   textarea,
   button,
   a {
-    font-family: "Poppins", "Segoe UI", sans-serif;
+    font-family: "Poppins", sans-serif;
+  }
+}
+
+@layer utilities {
+  .auth-enter {
+    animation: auth-enter 520ms ease-out both;
+  }
+
+  .auth-enter-delay {
+    animation: auth-enter 650ms ease-out both;
+  }
+
+  .auth-pop {
+    animation: auth-pop 700ms ease-out both;
+  }
+
+  @keyframes auth-enter {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes auth-pop {
+    from {
+      opacity: 0;
+      transform: translateY(24px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 }

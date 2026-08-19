@@ -1,7 +1,4 @@
-import Check from "../../../assets/check.svg";
-import X from "../../../assets/x.svg";
-import CircleAlert from "../../../assets/circle-alert.svg";
-
+import {Check, CircleAlert, X} from "lucide-react";
 interface NotificationBannerProps {
   open: boolean;
   title: string;
@@ -26,9 +23,9 @@ function NotificationBanner({
   const iconClass = tone === "success" ? "invert" : "invert";
   const iconLabel =
     tone === "success" ? (
-      <img src={Check} className="w-10 h-10" alt="Check" />
+      <Check size={16} />
     ) : (
-      <img src={CircleAlert} className="w-10 h-10" alt="Alert" />
+      <CircleAlert size={16} />
     );
 
   return (
@@ -56,7 +53,7 @@ function NotificationBanner({
             onClick={onClose}
             className="leading-none invert transition"
           >
-            <img src={X} className="w-10 h-10" alt="Tutup" />
+            <X size={16}/>
           </button>
         </div>
       </article>

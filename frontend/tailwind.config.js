@@ -9,6 +9,9 @@ export default {
         top: '10px 0 0 0 rgba(0, 0, 0, 0.1)',
         bottom: '0 0 10px 0 rgba(0, 0, 0, 0.1)',
       },
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+      },
     },
   },
   plugins: [],

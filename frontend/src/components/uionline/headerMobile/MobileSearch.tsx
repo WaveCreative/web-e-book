@@ -1,4 +1,4 @@
-import SearchIcon from "../../../assets/search.svg";
+import {SearchIcon} from "lucide-react";
 
 interface MobileSearchProps {
   open: boolean;
@@ -30,9 +30,7 @@ function MobileSearch({
           </button>
         </div>
         <div className="relative mt-3">
-          <img
-            src={SearchIcon}
-            alt=""
+          <SearchIcon
             className="pointer-events-none absolute left-3 top-1/2 invert h-4 w-4 -translate-y-1/2 opacity-60"
           />
           <input

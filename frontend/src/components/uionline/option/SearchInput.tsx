@@ -1,4 +1,4 @@
-import SearchIcon from "../../../assets/search.svg";
+import {SearchIcon} from "lucide-react";
 
 interface SearchInputProps {
   value: string;
@@ -13,10 +13,8 @@ function SearchInput({
 }: SearchInputProps) {
   return (
     <div className="relative w-full max-w-xs">
-      <img
-        src={SearchIcon}
-        alt=""
-        className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 invert opacity-60"
+      <SearchIcon
+        className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 opacity-60"
       />
       <input
         type="text"

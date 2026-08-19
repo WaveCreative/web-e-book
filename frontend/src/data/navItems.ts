@@ -75,4 +75,4 @@ export const mobileMenuItems: MobileMenuItem[]  = [
   },
 ];
 
-export const searchPlaceholder = "Cari buku, genre, penulis...";
+export const searchPlaceholder = "Cari buku";

@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { ReactNode } from "react";
 
 interface DropdownTriggerProps {
   label: string;
@@ -7,9 +8,8 @@ interface DropdownTriggerProps {
   onHoverOpen: () => void;
   onToggle: () => void;
   open: boolean;
-  chevronSrc: string;
+  chevronSrc?: ReactNode;
 }
-
 function DropdownTrigger({
   label,
   to,
@@ -32,13 +32,13 @@ function DropdownTrigger({
           open ? "opacity-70" : "hover:opacity-70"
         }`}
       >
-        <img
-          src={chevronSrc}
-          alt=""
-          className={`h-4 w-4 transition invert ${
-            open ? "brightness-0 scale-y-[-1]" : "opacity-70"
+        <span
+          className={`inline-flex transition-transform duration-200 ${
+            open ? "rotate-180" : ""
           }`}
-        />
+        >
+          {chevronSrc}
+        </span>
       </button>
     </>
   );
