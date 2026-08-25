@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\BookController as AdminBookController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\SummaryController as AdminSummaryController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
@@ -35,4 +39,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('orders/{order}', [OrderController::class, 'show']);
     Route::patch('orders/{order}/pay', [OrderController::class, 'pay']);
     Route::patch('orders/{order}/cancel', [OrderController::class, 'cancel']);
+});
+
+Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->group(function () {
+    Route::get('me', [AuthController::class, 'user']);
+    Route::get('overview', [AdminSummaryController::class, 'index']);
+    Route::get('users', [AdminUserController::class, 'index']);
+    Route::get('books', [AdminBookController::class, 'index']);
+    Route::get('orders', [AdminOrderController::class, 'index']);
+    Route::get('orders/{order}', [AdminOrderController::class, 'show']);
 });
